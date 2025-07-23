@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+[data-nextjs-dev-overlay] {
+  display: none !important;
+}
