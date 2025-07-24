@@ -1,13 +1,22 @@
 'use server';
 
+import Image, { ImageType } from './../models/image.model';
 import connectDB from '@/config/database';
 import cloudinary from '@/config/cloudinary';
 import { getServerSession } from 'next-auth';
-import Image, { imageType } from '../models/image.model';
 import { authOptions } from '../api/auth/[...nextauth]/options';
 import User from '../models/user.model';
+import { ObjectId } from 'mongoose';
 
-export async function addImage(imageData: imageType) {
+// export type NewImageType = {
+// 	owner: ObjectId | string;
+// 	title: string;
+// 	tag: string;
+// 	file: string;
+// 	location?: string;
+// };
+
+export async function addImage(imageData: ImageType) {
 	const upperCaseTag = (sentence: string) =>
 		sentence
 			.split(' ')
@@ -21,15 +30,13 @@ export async function addImage(imageData: imageType) {
 	}
 
 	try {
-		const user = await User.findOne({ email: session.user.email });
-
 		// Upload the images to Cloudinary
 		// Upload a single image to Cloudinary
 		const uploadedImage = await cloudinary.uploader.upload(imageData.file, {
 			transformation: [
 				{
 					width: 1920, // Max display size
-                    height: 1080,
+					height: 1080,
 					crop: 'limit', // Resize but don’t upscale
 					quality: 'auto:eco', // Smart compression
 					fetch_format: 'auto', // Use WebP/AVIF when supported
@@ -40,21 +47,29 @@ export async function addImage(imageData: imageType) {
 		// Get the secure URL
 		const imageUrl = uploadedImage.secure_url;
 
+		console.log('Connecting to database');
+		await connectDB();
+
+		const user = await User.findOne({ email: session.user.email });
+		if (!user) {
+			return { error: 'User not authorized', code: 401 };
+
+		}
+
+		
+		console.error(user._id);
+		
 		const newImage = new Image({
-			owner: user?._id,
-			imageTitle: imageData.title,
-			imageTag: upperCaseTag(imageData.tag),
+			owner: user._id,
+			title: imageData.title,
+			tag: upperCaseTag(imageData.tag),
 			file: imageUrl,
 		});
-
-		console.log('Connecting to database');
-
-		await connectDB();
 
 		const res = await newImage.save(); //* Save the new image
 
 		if (res) {
-			return { success: 'Image added successfully' };
+			return { success: 'Image added successfully', path: imageUrl };
 		}
 	} catch (error) {
 		console.error('Error adding image:', error);
