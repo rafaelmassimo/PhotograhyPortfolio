@@ -3,6 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { addImage } from '../actions/addImage';
 import { useState } from 'react';
+import imageCompression from 'browser-image-compression';
+import { ImageType } from '../models/image.model';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,34 +19,41 @@ const AddImageForm = () => {
 	const route = useRouter();
 
 	const [loading, setLoading] = useState<boolean>(false);
+	const [imageBase64, setImageBase64] = useState<string>();
+
+	const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+
+		const options = {
+			maxSizeMB: 3,
+			maxWidthOrHeight: 2400,
+			useWebWorker: true,
+			fileType: 'image/webp', // output format
+		};
+
+		try {
+			if (file) {
+				const compressedFile = await imageCompression(file, options);
+				const base64 = await imageCompression.getDataUrlFromFile(compressedFile);
+				setImageBase64(base64);
+			}
+		} catch (error) {
+			console.error('Compression error:', error);
+		}
+	};
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		const data = new FormData(e.currentTarget);
 
-		//* Get the single Image
-		let imageBase64String = '';
-		const imageFile = data.get('image') as File | null;
-
-		if (imageFile) {
-			const imageBuffer = await imageFile.arrayBuffer();
-			const imageData = Buffer.from(new Uint8Array(imageBuffer));
-
-			//* Convert the image data to base64
-			const imageBase64 = imageData.toString('base64');
-			imageBase64String = `data:${imageFile.type};base64,${imageBase64}`;
-		}
-
 		//* CREATE NEW OBJECT WITH THE DATA FROM FORM
 		const newImageData = {
 			title: data.get('title') as string,
 			tag: data.get('tag') as string,
-			file: imageBase64String,
+			file: imageBase64 as string,
 			location: (data.get('location') as string) || '',
 		};
-
-		console.log(newImageData);
 
 		try {
 			//* CALL THE ADD PRODUCT ACTION
@@ -53,9 +62,11 @@ const AddImageForm = () => {
 			const res = await addImage(newImageData);
 			if (res?.success) {
 				console.log(res);
-				
+
 				alert('image successfully added');
 				route.push(`${res.path}`);
+			} else {
+				alert(res?.error);
 			}
 		} catch (error) {
 			console.error('Error adding product:', error);
@@ -76,6 +87,7 @@ const AddImageForm = () => {
 							name="image"
 							accept="image/*"
 							className="file-input file-input-accent"
+							onChange={(e) => handleImageChange(e)}
 						/>
 					</fieldset>
 

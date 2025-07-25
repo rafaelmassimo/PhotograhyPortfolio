@@ -17,6 +17,9 @@ import { ObjectId } from 'mongoose';
 // };
 
 export async function addImage(imageData: ImageType) {
+
+	if(!imageData.title || !imageData.tag || !imageData.file) return {error: 'Missing required field(s)', status: 501}
+
 	const upperCaseTag = (sentence: string) =>
 		sentence
 			.split(' ')
@@ -32,17 +35,21 @@ export async function addImage(imageData: ImageType) {
 	try {
 		// Upload the images to Cloudinary
 		// Upload a single image to Cloudinary
-		const uploadedImage = await cloudinary.uploader.upload(imageData.file, {
-			transformation: [
-				{
-					width: 1920, // Max display size
-					height: 1080,
-					crop: 'limit', // Resize but don’t upscale
-					quality: 'auto:eco', // Smart compression
-					fetch_format: 'auto', // Use WebP/AVIF when supported
-				},
-			],
-		});
+
+		const uploadedImage = await cloudinary.uploader.upload(imageData.file);
+
+		//>> VERSION WHEN I CAN CHOOSE THE SIZES
+		// const uploadedImage = await cloudinary.uploader.upload(imageData.file, {
+		// 	transformation: [
+		// 		{
+		// 			width: 1920, // Max display size
+		// 			height: 1080,
+		// 			crop: 'limit', // Resize but don’t upscale
+		// 			quality: 'auto:eco', // Smart compression
+		// 			fetch_format: 'auto', // Use WebP/AVIF when supported
+		// 		},
+		// 	],
+		// });
 
 		// Get the secure URL
 		const imageUrl = uploadedImage.secure_url;
@@ -55,9 +62,6 @@ export async function addImage(imageData: ImageType) {
 			return { error: 'User not authorized', code: 401 };
 
 		}
-
-		
-		console.error(user._id);
 		
 		const newImage = new Image({
 			owner: user._id,
