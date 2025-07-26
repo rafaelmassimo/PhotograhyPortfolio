@@ -19,10 +19,6 @@ export default function Home() {
 
 	useEffect(() => {
 		const initiateHomePage = async () => {
-			// Getting Session Data
-			const sess = await getSession();
-			setSession(sess);
-
 			// Getting All Images
 			// const data = await getAllImages();
 			// if(Array.isArray(data) && data.length > 0) {

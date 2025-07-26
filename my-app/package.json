@@ -13,6 +13,7 @@
     "browser-image-compression": "^2.0.2",
     "cloudinary": "^2.7.0",
     "dotenv": "^17.2.0",
+    "middleware": "^1.0.0",
     "mongodb": "4.1",
     "mongoose": "^8.16.4",
     "next": "15.4.3",

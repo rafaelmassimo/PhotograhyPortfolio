@@ -6,11 +6,11 @@ import { CldImage } from 'next-cloudinary';
 const ImageBox = ({ imageFile }: { imageFile: ImageType }) => {
 	return (
 		<>
-			<div key={imageFile.id?.toString()}>
+			<div key={imageFile._id?.toString()}>
 				<Image src={imageFile.file} alt={imageFile.title} height={400} width={400} />
 			</div>
 
-			<div>
+			{/* <div>
 				<CldImage
 					src={imageFile.file}
 					width={1920}
@@ -20,7 +20,7 @@ const ImageBox = ({ imageFile }: { imageFile: ImageType }) => {
 					loading="lazy"
 					alt="Portfolio image"
 				/>
-			</div>
+			</div> */}
 		</>
 	);
 };

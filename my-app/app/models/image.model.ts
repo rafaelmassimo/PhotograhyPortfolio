@@ -3,7 +3,7 @@ import mongoose, { Model, Schema, Types, model } from 'mongoose';
 
 export type ImageType = {
     owner?: Types.ObjectId | string;
-    id?: Types.ObjectId;
+    _id?: Types.ObjectId;
     title: string;
     tag: string;
     file: string;
