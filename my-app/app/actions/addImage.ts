@@ -38,7 +38,7 @@ export async function addImage(imageData: ImageType) {
 
 		const uploadedImage = await cloudinary.uploader.upload(imageData.file);
 
-		//>> VERSION WHEN I CAN CHOOSE THE SIZES
+		//>> VERSION WHERE I CAN CHOOSE THE SIZES
 		// const uploadedImage = await cloudinary.uploader.upload(imageData.file, {
 		// 	transformation: [
 		// 		{

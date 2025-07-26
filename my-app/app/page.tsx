@@ -1,5 +1,9 @@
 'use client';
 
+// If I'm going to import all.scss means that I'm applying all styles coming from all .scss file that I'm adding in All.scss
+//Now I can use directly the classname coming from all.scss that it will work
+import './styles/all.scss'
+
 import { useEffect, useState } from 'react';
 import { getSession } from 'next-auth/react';
 import { Session } from 'next-auth';
@@ -20,20 +24,23 @@ export default function Home() {
 			setSession(sess);
 
 			// Getting All Images
-			const data = await getAllImages();
-			if(Array.isArray(data) && data.length > 0) {
-				setImages(data);
-			}
+			// const data = await getAllImages();
+			// if(Array.isArray(data) && data.length > 0) {
+			// 	setImages(data);
+			// }
 		};
 		initiateHomePage();
 	}, []);
 
 	return (
-		<div>
+		<div className='hero'>
 			hello homepage
 			{
 				images.map((image) => (
-					<ImageBox key={image.id?.toString()} {...image} />
+					<div key={image.file}>
+
+					<ImageBox  imageFile={image} />
+					</div>
 				))
 			}
 		</div>

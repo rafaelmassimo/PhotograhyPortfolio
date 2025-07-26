@@ -3,10 +3,10 @@ import { ImageType } from '../models/image.model';
 import Image from 'next/image';
 import { CldImage } from 'next-cloudinary';
 
-const ImageBox = (imageFile: ImageType) => {
+const ImageBox = ({ imageFile }: { imageFile: ImageType }) => {
 	return (
 		<>
-			<div>
+			<div key={imageFile.id?.toString()}>
 				<Image src={imageFile.file} alt={imageFile.title} height={400} width={400} />
 			</div>
 

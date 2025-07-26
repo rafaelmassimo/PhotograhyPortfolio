@@ -70,8 +70,8 @@ export const authOptions = {
 
 			try {
 				await connectDB();
-				console.log('Token:', token);
-				console.log('inside session callback');
+				// console.log('Token:', token);
+				// console.log('inside session callback');
 				const userData = await User.findOne({ email: token.email }).lean().exec();
 				if (session.user) {
 					// if you do not have a role it will be a *user* as defined below
@@ -80,7 +80,7 @@ export const authOptions = {
 				}
 				session.maxAge = 30 * 24 * 60 * 60 * 100; // 30 days
 
-				console.log('Session:', session);
+				// console.log('Session:', session);
 			} catch (error) {
 				console.log('Error:', error);
 			}
