@@ -1,0 +1,15 @@
+.text-link {
+	size: 2rem;
+	color: rgb(37, 37, 37);
+	background-color: whitesmoke;
+    padding: 1rem;
+    border-radius: 10px;
+
+
+	&:hover {
+		size: 2.5rem;
+		color: rgb(35, 35, 62);
+		cursor: pointer;
+		background-color: grey;
+	}
+}

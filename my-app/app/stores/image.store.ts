@@ -11,6 +11,7 @@ interface State {
 interface Actions {
 	setImages: (value: ImageType[] | ImageType) => void;
     deleImage: (id: string) => void;
+    clearAll: () => void;
 }
 
 // Here, you define how the store behaves (initial state and the logic of each action)
@@ -23,7 +24,9 @@ const storeAPI: StateCreator<State & Actions> = (set) => ({
     deleImage: (id:string) => 
         set((state) => ({
             images: state.images.filter((image)=> image._id?.toString() !== id),
-        }))
+        })),
+
+    clearAll: () => set({ images: [] }),
 });
 
 // Finally, create the Zustand store and export it for use in your app
