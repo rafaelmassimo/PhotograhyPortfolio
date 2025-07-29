@@ -11,6 +11,7 @@ import ImageBox from './components/imageBox';
 import TagSelector from './components/tagSelector';
 import Link from 'next/link';
 import MansoryGrid from './components/MansoryGrid';
+import MasonryGrid from './components/MansoryGrid';
 
 export default function Home() {
 	const images = useImageStore((state) => state.images);
@@ -29,23 +30,18 @@ export default function Home() {
 
 	return (
 		<>
-		<div className='w-100vw h-100vw'>
-
-			<Link href={'/addImage'}>add image</Link>
-			<div className="flex flex-row items-center justify-between mx-4">
-				hello homepage
-				<TagSelector />
-			</div>
-			<div className='imagesGrid'>
-			{
-				images.map((image) => (
-					<div key={image._id?.toString()} className='masonry-item mx-2'>
-						<ImageBox imageFile={image}/>
-					</div>
-				))
-			}
-		</div>
+			<div className="flex flex-col w-full">
+				<Link href={'/addImage'}>add image</Link>
+				<div className="flex flex-row items-center justify-between mx-4">
+					hello homepage
+					<TagSelector />
 				</div>
+				<div className="">
+					<div className="px-4">
+						<MasonryGrid images={images} />
+					</div>
+				</div>
+			</div>
 		</>
 	);
 }

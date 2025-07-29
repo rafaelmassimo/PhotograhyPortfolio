@@ -7,7 +7,7 @@ import ImageBox from './imageBox';
 import '../styles/all.scss'
 
 const breakpointColumnsObj = {
-	default: 4,
+	default: 3,
 	1100: 3,
 	700: 2,
 	500: 1,
