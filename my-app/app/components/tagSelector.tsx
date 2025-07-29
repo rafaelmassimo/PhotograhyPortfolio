@@ -14,12 +14,14 @@ const TagSelector = () => {
 
 	return (
 		<>
-			<div className='flex flex-row justify-between m-4 p-4 '>
-				<nav className='flex gap-4'>
+			<div className="flex flex-row justify-between m-4 p-4 ">
+				<nav className="flex gap-4">
 					{tags.map((tag, i) => (
-            <Link href={`/${tag}`}>
-						<span className='text-link hover:text-link-hover' key={i}>{tag}</span>
-            </Link>
+						<Link key={i} href={`/${tag}`}>
+							<span className="text-link hover:text-link-hover" key={i}>
+								{tag}
+							</span>
+						</Link>
 					))}
 				</nav>
 			</div>

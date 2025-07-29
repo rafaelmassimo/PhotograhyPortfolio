@@ -28,10 +28,22 @@ export default function Home() {
 	}, []);
 
 	return (
+		<>
 		<div className='flex flex-row items-center justify-between mx-4'>
 			hello homepage
-			
 			<TagSelector/>
+			
+
 		</div>
+		<div className='ImagesBox'>
+			{
+				images.map((image) => (
+					<div key={image._id?.toString()}>
+						<ImageBox imageFile={image}/>
+					</div>
+				))
+			}
+		</div>
+		</>
 	);
 }

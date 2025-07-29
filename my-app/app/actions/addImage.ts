@@ -6,19 +6,10 @@ import cloudinary from '@/config/cloudinary';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../api/auth/[...nextauth]/options';
 import User from '../models/user.model';
-import { ObjectId } from 'mongoose';
-
-// export type NewImageType = {
-// 	owner: ObjectId | string;
-// 	title: string;
-// 	tag: string;
-// 	file: string;
-// 	location?: string;
-// };
 
 export async function addImage(imageData: ImageType) {
-
-	if(!imageData.title || !imageData.tag || !imageData.file) return {error: 'Missing required field(s)', status: 501}
+	if (!imageData.title || !imageData.tag || !imageData.file)
+		return { error: 'Missing required field(s)', status: 501 };
 
 	const upperCaseTag = (sentence: string) =>
 		sentence
@@ -38,21 +29,13 @@ export async function addImage(imageData: ImageType) {
 
 		const uploadedImage = await cloudinary.uploader.upload(imageData.file);
 
-		//>> VERSION WHERE I CAN CHOOSE THE SIZES
-		// const uploadedImage = await cloudinary.uploader.upload(imageData.file, {
-		// 	transformation: [
-		// 		{
-		// 			width: 1920, // Max display size
-		// 			height: 1080,
-		// 			crop: 'limit', // Resize but don’t upscale
-		// 			quality: 'auto:eco', // Smart compression
-		// 			fetch_format: 'auto', // Use WebP/AVIF when supported
-		// 		},
-		// 	],
-		// });
-
-		// Get the secure URL
-		const imageUrl = uploadedImage.secure_url;
+		// Get all MetaData from response from cloudinary
+		const imageMetaData = {
+			secure_url: uploadedImage.secure_url,
+			public_id: uploadedImage.public_id,
+			width: uploadedImage.width,
+			height: uploadedImage.height,
+		};
 
 		console.log('Connecting to database');
 		await connectDB();
@@ -60,23 +43,36 @@ export async function addImage(imageData: ImageType) {
 		const user = await User.findOne({ email: session.user.email });
 		if (!user) {
 			return { error: 'User not authorized', code: 401 };
-
 		}
-		
 		const newImage = new Image({
 			owner: user._id,
 			title: imageData.title,
 			tag: upperCaseTag(imageData.tag),
-			file: imageUrl,
+			file: imageMetaData.secure_url,
+			height: imageMetaData.height,
+			width: imageMetaData.width,
 		});
 
 		const res = await newImage.save(); //* Save the new image
 
 		if (res) {
-			return { success: 'Image added successfully', path: imageUrl };
+			return { success: 'Image added successfully', path: imageMetaData.secure_url };
 		}
 	} catch (error) {
 		console.error('Error adding image:', error);
 		return { error: 'Error adding image' };
 	}
 }
+
+//>> VERSION WHERE I CAN CHOOSE THE SIZES
+// const uploadedImage = await cloudinary.uploader.upload(imageData.file, {
+// 	transformation: [
+// 		{
+// 			width: 1920, // Max display size
+// 			height: 1080,
+// 			crop: 'limit', // Resize but don’t upscale
+// 			quality: 'auto:eco', // Smart compression
+// 			fetch_format: 'auto', // Use WebP/AVIF when supported
+// 		},
+// 	],
+// });

@@ -25,7 +25,7 @@ const AddImageForm = () => {
 		const file = e.target.files?.[0];
 
 		const options = {
-			maxSizeMB: 3,
+			maxSizeMB: 0.8,
 			maxWidthOrHeight: 2400,
 			useWebWorker: true,
 			fileType: 'image/webp', // output format

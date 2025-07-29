@@ -1,28 +1,44 @@
-import React from 'react';
+'use client'
+
+import React, { useState } from 'react';
 import { ImageType } from '../models/image.model';
 import Image from 'next/image';
 import { CldImage } from 'next-cloudinary';
 
+
 const ImageBox = ({ imageFile }: { imageFile: ImageType }) => {
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	return (
 		<>
-			<div key={imageFile._id?.toString()}>
-				<Image src={imageFile.file} alt={imageFile.title} height={400} width={400} />
-			</div>
-
-			{/* <div>
+			<div className='' key={imageFile._id?.toString()}>
 				<CldImage
 					src={imageFile.file}
-					width={1920}
-                    height={1080}
-					crop="limit"
-					quality="auto:eco"
-					loading="lazy"
-					alt="Portfolio image"
+					alt={imageFile.title}
+					width={100}
+					height={100}
+					preserveTransformations
 				/>
-			</div> */}
+			</div>
 		</>
 	);
 };
 
 export default ImageBox;
+
+{
+	/* <div key={imageFile._id?.toString()}>
+				<Image src={imageFile.file} alt={imageFile.title} height={400} width={400} />
+			</div> */
+}
+
+// 		<Image
+//   src={photoUrl}
+//   alt="Picture of the author"
+//   sizes="100vw"
+//   style={{
+//     width: '100%',
+//     height: 'auto',
+//   }}
+//   width={500}
+//   height={300}
+// />

@@ -6,7 +6,11 @@ module.exports = {
 		'./app/**/*.{js,ts,jsx,tsx,mdx}',
 	],
 	theme: {
-		extend: {},
+		extend: {
+			fontFamily: {
+				poppins: ['var(--font-poppins)', 'sans-serif'],
+			},
+		},
 	},
 	plugins: [require('daisyui')],
 };
