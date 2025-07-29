@@ -11,10 +11,30 @@ export const ImageBox = ({
 	onClick?: () => void;
 }) => {
 	const [isLoading, setIsLoading] = useState(true);
+	const [isAnimating, setIsAnimating] = useState(false);
 	const setUrl = useFullScreenImage((state) => state.setFullScreenImage);
 
+	const handleImageClick = () => {
+		// Start the animation
+		setIsAnimating(true);
+		
+		// After animation completes, show full screen image
+		setTimeout(() => {
+			setUrl(imageFile.file);
+			setIsAnimating(false);
+		}, 500); // 400ms matches the animation duration
+		
+		// Call the optional onClick prop if provided
+		if (onClick) {
+			onClick();
+		}
+	};
+
 	return (
-		<div className="image-container cursor-pointer" onClick={onClick}>
+		<div 
+			className={`image-container cursor-pointer ${isAnimating ? 'image-click-animation' : ''}`} 
+			onClick={handleImageClick}
+		>
 			{isLoading && (
 				<div className="flex items-center justify-center bg-white/50">
 					<p className="text-sm text-gray-700">Loading...</p>
@@ -28,7 +48,6 @@ export const ImageBox = ({
 				width={Number(imageFile.width)}
 				onLoad={() => setIsLoading(false)}
 				className="w-full h-auto"
-				onClick={() => setUrl(imageFile.file)}
 			/>
 		</div>
 	);

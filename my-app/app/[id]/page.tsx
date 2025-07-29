@@ -6,7 +6,7 @@ import React, { useEffect } from 'react';
 import { getAllImages } from '../actions/getAllImages';
 import { useImageStore } from '../stores/image.store';
 import { getImagesByTag } from '../actions/getImagesByTag';
-import ImageBox from '../components/imageBox';
+import { ImageBox } from '../components/imageBox';
 
 const ImagesFiltered = () => {
 	const { id: tag } = useParams();
