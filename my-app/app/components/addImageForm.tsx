@@ -13,6 +13,8 @@ export type NewImageType = {
 	tag: string;
 	file: string;
 	location?: string;
+	height: number;
+	width: number;
 };
 
 const AddImageForm = () => {
@@ -64,7 +66,7 @@ const AddImageForm = () => {
 				console.log(res);
 
 				alert('image successfully added');
-				route.push(`${res.path}`);
+				route.push(`/`);
 			} else {
 				alert(res?.error);
 			}

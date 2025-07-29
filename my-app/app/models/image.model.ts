@@ -7,8 +7,8 @@ export type ImageType = {
 	title: string;
 	tag: string;
 	file: string;
-	width: Number;
-	height: Number;
+	width?: Number;
+	height?: Number;
 	location?: string;
 };
 
