@@ -3,8 +3,9 @@
 import React from 'react';
 import Masonry from 'react-masonry-css';
 import { ImageType } from '../models/image.model';
-import ImageBox from './imageBox';
-import '../styles/all.scss'
+
+import '../styles/all.scss';
+import { ImageBox } from './imageBox';
 
 const breakpointColumnsObj = {
 	default: 3,
@@ -13,7 +14,11 @@ const breakpointColumnsObj = {
 	500: 1,
 };
 
-const MasonryGrid = ({ images }: { images: ImageType[] }) => {
+interface MasonryGridProps {
+	images: ImageType[];
+}
+
+const MasonryGrid: React.FC<MasonryGridProps> = ({ images }) => {
 	return (
 		<Masonry
 			breakpointCols={breakpointColumnsObj}

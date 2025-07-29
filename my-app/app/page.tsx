@@ -3,19 +3,19 @@
 // If I'm going to import all.scss means that I'm applying all styles coming from all .scss file that I'm adding in All.scss
 // Now I can use directly the classname coming from all.scss that it will work
 import './styles/all.scss';
-
 import { useEffect, useState } from 'react';
 import { useImageStore } from './stores/image.store';
 import { getAllImages } from './actions/getAllImages';
-import ImageBox from './components/imageBox';
 import TagSelector from './components/tagSelector';
 import Link from 'next/link';
-import MansoryGrid from './components/MansoryGrid';
 import MasonryGrid from './components/MansoryGrid';
+import FullScreenImageViewer from './components/FullScreenImageViewer';
+import { useFullScreenImage } from './stores/fullScreenImage.store';
 
 export default function Home() {
 	const images = useImageStore((state) => state.images);
 	const setImages = useImageStore((state) => state.setImages);
+	const fullScreenImage = useFullScreenImage((state) => state.FullScreenImage);
 
 	useEffect(() => {
 		const initiateHomePage = async () => {
@@ -38,8 +38,14 @@ export default function Home() {
 				</div>
 				<div className="">
 					<div className="px-4">
-						<MasonryGrid images={images} />
+						{/* //I'm passing the function  */}
+						<MasonryGrid images={images}/>
 					</div>
+
+					{fullScreenImage && (
+						//When you click on closingViewer you'll set the urlImageFullScreen as null so this element will stop to being showed
+						<FullScreenImageViewer/>
+					)}
 				</div>
 			</div>
 		</>
