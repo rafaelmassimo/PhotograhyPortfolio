@@ -1,16 +1,10 @@
 import React from 'react';
 import { useImageStore } from '../stores/image.store';
 import Link from 'next/link';
+import { useTagStore } from '../stores/tag.store';
 
 const TagSelector = () => {
-	const state = useImageStore((state) => state.images);
-	const tags: string[] = [];
-
-	state.map((image) => {
-		if (!tags.includes(image.tag)) {
-			tags.push(image.tag);
-		}
-	});
+	const tags = useTagStore((state)=> state.tags);
 
 	return (
 		<>

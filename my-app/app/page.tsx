@@ -11,11 +11,13 @@ import Link from 'next/link';
 import MasonryGrid from './components/MansoryGrid';
 import FullScreenImageViewer from './components/FullScreenImageViewer';
 import { useFullScreenImage } from './stores/fullScreenImage.store';
+import { useTagStore } from './stores/tag.store';
 
 export default function Home() {
 	const images = useImageStore((state) => state.images);
 	const setImages = useImageStore((state) => state.setImages);
 	const fullScreenImage = useFullScreenImage((state) => state.FullScreenImage);
+	const setNewTags = useTagStore((state) => state.setTag)
 
 	useEffect(() => {
 		const initiateHomePage = async () => {
@@ -23,6 +25,7 @@ export default function Home() {
 			const data = await getAllImages();
 			if (Array.isArray(data) && data.length > 0) {
 				setImages(data);
+				setNewTags(data)
 			}
 		};
 		initiateHomePage();

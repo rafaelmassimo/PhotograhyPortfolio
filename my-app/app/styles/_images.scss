@@ -18,7 +18,7 @@
 /* Image click animation - Scale up with fade out */
 @keyframes scaleAndFade {
 	0% {
-		transform: scale(1);
+		transform: scale(1.01);
 		opacity: 1;
 	}
 	100% {
