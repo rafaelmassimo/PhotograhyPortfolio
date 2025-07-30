@@ -11,11 +11,12 @@ export async function addImage(imageData: ImageType) {
 	if (!imageData.title || !imageData.tag || !imageData.file)
 		return { error: 'Missing required field(s)', status: 501 };
 
-	const upperCaseTag = (sentence: string) =>
-		sentence
+	const toPascalCase = (sentence: string) => {
+		return sentence
 			.split(' ')
-			.map((word) => word[0].toUpperCase() + word.slice(1))
-			.join(' ');
+			.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+			.join('');
+	};
 
 	const session = await getServerSession(authOptions);
 
@@ -47,7 +48,7 @@ export async function addImage(imageData: ImageType) {
 		const newImage = new Image({
 			owner: user._id,
 			title: imageData.title,
-			tag: upperCaseTag(imageData.tag),
+			tag: toPascalCase(imageData.tag),
 			file: imageMetaData.secure_url,
 			height: imageMetaData.height,
 			width: imageMetaData.width,

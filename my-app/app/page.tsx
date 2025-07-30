@@ -10,6 +10,7 @@ import MasonryGrid from './components/MansoryGrid';
 import FullScreenImageViewer from './components/FullScreenImageViewer';
 import { useFullScreenImage } from './stores/fullScreenImage.store';
 import { useTagStore } from './stores/tag.store';
+import MobileMenu from './components/MobileMenu';
 
 export default function Home() {
 	const images = useImageStore((state) => state.images);
@@ -33,6 +34,9 @@ export default function Home() {
 		<>
 			<div className="w-full">
 				<div>
+					<div className='h-16 flex items-center justify-center relative'>
+						<MobileMenu/>
+					</div>
 					<div className="px-4">
 						<MasonryGrid images={images} />
 					</div>

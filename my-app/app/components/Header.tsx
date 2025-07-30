@@ -5,15 +5,16 @@ import Link from 'next/link';
 import TagSelector from './tagSelector';
 import { signOut, useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
+import MobileMenu from './MobileMenu';
 
 const Header = () => {
 	const session = useSession();
 	const pathName = usePathname();
 
 	return (
-		<header className="w-full flex flex-row items-center justify-between">
+		<header className="w-full flex flex-row items-center justify-between relative">
 			{/* Navigation Bar */}
-			<div className="w-full flex flex-row mx-4 py-4">
+			<div className="w-full flex flex-row justify-between mx-4 py-4">
 				<Link href={'/'}>
 					<h1 className="text-4xl font-bold clickable-title mr-2">Rafael Massimo</h1>
 				</Link>
@@ -41,10 +42,11 @@ const Header = () => {
 						</div>
 					)}
 				</div>
+				{/* Tag Selector */}
+				<div className="hidden lg:block">
+					<TagSelector />
+				</div>
 			</div>
-
-			{/* Tag Selector */}
-			<TagSelector />
 		</header>
 	);
 };

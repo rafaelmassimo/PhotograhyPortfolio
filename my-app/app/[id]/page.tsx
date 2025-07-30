@@ -8,6 +8,7 @@ import FullScreenImageViewer from '../components/FullScreenImageViewer';
 import MasonryGrid from '../components/MansoryGrid';
 import { useFullScreenImage } from '../stores/fullScreenImage.store';
 import { useSession } from 'next-auth/react';
+import MobileMenu from '../components/MobileMenu';
 
 const ImagesFiltered = () => {
 	const { id: tag } = useParams();
@@ -16,11 +17,8 @@ const ImagesFiltered = () => {
 	const clearAllImages = useImageStore((store) => store.clearAll);
 	const fullScreenImage = useFullScreenImage((state) => state.FullScreenImage);
 
-	
-
 	useEffect(() => {
 		const initiateFilteredPage = async () => {
-			clearAllImages();
 			//* Getting All Filtered Images
 			const data = await getImagesByTag(tag as string);
 			if (Array.isArray(data) && data.length > 0) {
@@ -39,13 +37,14 @@ const ImagesFiltered = () => {
 		<>
 			<div className="w-full">
 				<div>
+					<div className='h-16 flex items-center justify-center relative'>
+						<MobileMenu />
+					</div>
 					<div className="px-4">
 						<MasonryGrid images={images} />
 					</div>
 
-					{fullScreenImage && (
-						<FullScreenImageViewer />
-					)}
+					{fullScreenImage && <FullScreenImageViewer />}
 				</div>
 			</div>
 		</>

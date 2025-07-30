@@ -7,6 +7,7 @@ import Image from 'next/image';
 
 import '../styles/all.scss';
 import { ImageBox } from './imageBox';
+import LoadingImages from './LoadingImages';
 
 const breakpointColumnsObj = {
 	default: 3,
@@ -23,14 +24,7 @@ const MasonryGrid: React.FC<MasonryGridProps> = ({ images }) => {
 	if (images.length === 0) {
 		return (
 			<div className='flex flex-col justify-start items-center'>
-				<Image
-					src="/sofy.png"
-					alt="sofy"
-					width={800}
-					height={600}
-				
-				/>
-				<span className='text-4xl'>No Images</span>
+				<LoadingImages/>
 			</div>
 		);
 	}
