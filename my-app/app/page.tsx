@@ -1,5 +1,8 @@
 'use client';
 
+// Force dynamic rendering to ensure fresh NextAuth session data and prevent caching issues
+export const dynamic = 'force-dynamic';
+
 // If I'm going to import all.scss means that I'm applying all styles coming from all .scss file that I'm adding in All.scss
 // Now I can use directly the classname coming from all.scss that it will work
 import './styles/all.scss';
