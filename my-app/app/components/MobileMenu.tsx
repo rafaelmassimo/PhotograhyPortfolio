@@ -38,7 +38,7 @@ const MobileMenu = () => {
 						animate={{ height: 'auto', opacity: 1 }}
 						exit={{ height: 0, opacity: 0 }}
 						transition={{ duration: 0.3 }}
-						className="absolute top-full left-1/2 transform -translate-x-1/2 w-64 bg-white border border-black shadow-md overflow-hidden rounded-md mt-2 z-[9999]"
+						className="absolute top-full left-1/2 transform -translate-x-1/2 w-64 bg-[rgb(220,220,221)] border border-black shadow-md overflow-hidden rounded-md mt-2 z-[9999]"
 					>
 						<nav className="flex flex-col gap-4 p-4">
 							{tags.map((tag, i) => (

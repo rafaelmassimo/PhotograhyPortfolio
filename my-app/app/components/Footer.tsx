@@ -1,13 +1,17 @@
 'use client';
 
-import { signIn, signOut } from 'next-auth/react';
+import { div } from 'framer-motion/client';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import React from 'react';
+import { AiFillFire } from 'react-icons/ai';
 
 const Footer = () => {
 	const currentYear = new Date().getFullYear();
+	const session = useSession();
+	console.log(session);
 
 	return (
-		<footer className="border-t border-gray-200 mt-16 py-8">
+		<footer className="border-t border-gray-200 mt-16 py-8 relative">
 			<div className="px-4 ml-4">
 				<div className="flex flex-col items-start justify-start space-y-4">
 					{/* Nome/Copyright */}
@@ -40,18 +44,24 @@ const Footer = () => {
 					</div>
 				</div>
 			</div>
-			<button
-				onClick={() => signOut()}
-				className="text-sm text-gray-600 hover:text-black transition-colors duration-200 mr-4"
-			>
-				Sign Out
-			</button>
-			<button
-				onClick={() => signIn()}
-				className="text-sm text-gray-600 hover:text-black transition-colors duration-200 mr-4"
-			>
-				Sign In
-			</button>
+			{session.status === 'authenticated' && (
+				<div className='ml-6'>
+					<button
+						onClick={() => signOut()}
+						className="text-sm text-gray-600 hover:text-black transition-colors duration-200 mr-4"
+					>
+						<button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400">
+							<span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
+								Sign Out
+							</span>
+						</button>
+					</button>
+				</div>
+			)}
+
+			{session.status === 'unauthenticated' && (
+				<AiFillFire className="absolute text-slate-100 bottom-4 right-4" onClick={() => signIn()} />
+			)}
 		</footer>
 	);
 };
