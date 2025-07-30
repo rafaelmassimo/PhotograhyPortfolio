@@ -8,17 +8,19 @@ const TagSelector = () => {
 	const tags = useTagStore((state) => state.tags);
 
 	return (
-		<header className="hidden lg:block w-full  flex flex-row justify-end sticky top-0 z-40 ml-4">
-			<div className="max-w-7xl mx-auto px-4 py-4">
-				<nav className="flex flex-row gap-6">
+		<div className="hidden lg:flex w-full flex-row items-end justify-end ml-4">
+			<div className="max-w-7xl flex items-end">
+				<nav className="flex flex-row items-end gap-6">
 					{tags.map((tag, i) => (
 						<Link key={i} href={`/${tag}`}>
-							<span className="text-black hover:underline cursor-pointer">{splitAndCapitalize(tag)}</span>
+							<span className="text-black hover:underline cursor-pointer">
+								{splitAndCapitalize(tag)}
+							</span>
 						</Link>
 					))}
 				</nav>
 			</div>
-		</header>
+		</div>
 	);
 };
 

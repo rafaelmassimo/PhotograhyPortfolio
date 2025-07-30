@@ -4,10 +4,20 @@
 	cursor: pointer;
 	border-radius: 4px;
 	padding: 1px;
+	padding-top: 40px;
+	letter-spacing: 10px;
 
 	&:active {
 		box-shadow: inset 1px 6px 10px 0px rgba(0, 0, 0, 69%);
-		color: rgba(55, 65, 81, 0.9); /* Slightly darker text */
+		color: rgba(31, 33, 37, 0.9); /* Slightly darker text */
 		transform: translateY(2px); /* Move down 2px */
+	}
+
+	@media (max-width: 1017px) {
+		font-size: 1rem;
+
+		left: 50%;
+		transform: translate(-50%,90%);
+		padding-left:30px ;
 	}
 }

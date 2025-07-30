@@ -12,11 +12,11 @@ const Header = () => {
 	const pathName = usePathname();
 
 	return (
-		<header className="w-full flex flex-row items-center justify-between relative">
+		<header className="w-full">
 			{/* Navigation Bar */}
-			<div className="w-full flex flex-row justify-between mx-4 py-4">
+			<div className="w-full flex flex-row justify-around mb-[-1rem] items-end">
 				<Link href={'/'}>
-					<h1 className="text-4xl flex items-center  font-bold clickable-title mr-2">
+					<h1 className="text-4xl  clickable-title text-end">
 						Rafael Massimo
 					</h1>
 				</Link>
