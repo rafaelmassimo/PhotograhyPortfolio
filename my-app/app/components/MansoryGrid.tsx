@@ -3,6 +3,7 @@
 import React from 'react';
 import Masonry from 'react-masonry-css';
 import { ImageType } from '../models/image.model';
+import Image from 'next/image';
 
 import '../styles/all.scss';
 import { ImageBox } from './imageBox';
@@ -19,6 +20,20 @@ interface MasonryGridProps {
 }
 
 const MasonryGrid: React.FC<MasonryGridProps> = ({ images }) => {
+	if (images.length === 0) {
+		return (
+			<div className='flex flex-col justify-start items-center'>
+				<Image
+					src="/sofy.png"
+					alt="sofy"
+					width={800}
+					height={600}
+				
+				/>
+				<span className='text-4xl'>No Images</span>
+			</div>
+		);
+	}
 	return (
 		<Masonry
 			breakpointCols={breakpointColumnsObj}

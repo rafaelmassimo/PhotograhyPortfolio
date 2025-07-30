@@ -1,15 +1,13 @@
-.text-link {
-	size: 2rem;
-	color: rgb(37, 37, 37);
-	background-color: whitesmoke;
-    padding: 1rem;
-    border-radius: 10px;
+/* Efeito de sombra interna para H1 */
+.clickable-title {
+	transition: all 0.1s ease;
+	cursor: pointer;
+	border-radius: 4px;
+	padding: 1px;
 
-
-	&:hover {
-		size: 2.5rem;
-		color: rgb(35, 35, 62);
-		cursor: pointer;
-		background-color: grey;
+	&:active {
+		box-shadow: inset 1px 6px 10px 0px rgba(0, 0, 0, 69%);
+		color: rgba(55, 65, 81, 0.9); /* Slightly darker text */
+		transform: translateY(2px); /* Move down 2px */
 	}
 }

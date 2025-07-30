@@ -4,22 +4,20 @@ import Link from 'next/link';
 import { useTagStore } from '../stores/tag.store';
 
 const TagSelector = () => {
-	const tags = useTagStore((state)=> state.tags);
+	const tags = useTagStore((state) => state.tags);
 
 	return (
-		<>
-			<div className="flex flex-row justify-between m-4 p-4 ">
-				<nav className="flex gap-4">
+		<header className=" w-full  flex flex-row justify-end sticky top-0 z-40">
+			<div className="max-w-7xl mx-auto px-4 py-4">
+				<nav className="flex flex-row gap-6">
 					{tags.map((tag, i) => (
 						<Link key={i} href={`/${tag}`}>
-							<span className="text-link hover:text-link-hover" key={i}>
-								{tag}
-							</span>
+							<span className="text-black hover:underline cursor-pointer">{tag}</span>
 						</Link>
 					))}
 				</nav>
 			</div>
-		</>
+		</header>
 	);
 };
 

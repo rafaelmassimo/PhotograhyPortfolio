@@ -18,7 +18,7 @@ const FullScreenImageViewer = () => {
 
 		const handlePopState = () => {
 			console.log('going back');
-			
+
 			deleteUrl();
 		};
 
@@ -42,6 +42,18 @@ const FullScreenImageViewer = () => {
 		};
 	}, [deleteUrl]);
 
+	// Previne clique direito para evitar download da imagem
+	const handleContextMenu = (e: React.MouseEvent) => {
+		e.preventDefault();
+		return false;
+	};
+
+	// Previne drag and drop da imagem
+	const handleDragStart = (e: React.DragEvent) => {
+		e.preventDefault();
+		return false;
+	};
+
 	return (
 		<div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center">
 			<button
@@ -54,7 +66,10 @@ const FullScreenImageViewer = () => {
 
 			<img
 				src={fullScreenImage}
-				className="max-w-full max-h-full object-contain fullscreen-image-fade-in"
+				className="max-w-full max-h-full object-contain fullscreen-image-fade-in select-none"
+				onContextMenu={handleContextMenu}
+				onDragStart={handleDragStart}
+				draggable={false}
 			/>
 		</div>
 	);

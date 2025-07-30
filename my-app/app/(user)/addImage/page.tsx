@@ -1,12 +1,11 @@
 import AddImageForm from '@/app/components/addImageForm';
 import Link from 'next/link';
 import React from 'react';
+import '@/app/styles/all.scss'; // Import styles to ensure consistency
 
 const AddPhotoPage = () => {
 	return (
 		<div>
-			<Link href={'/'}>home</Link>
-			Add image
 			<div>
 				<AddImageForm />
 			</div>

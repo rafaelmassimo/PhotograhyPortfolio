@@ -5,6 +5,7 @@ import { addImage } from '../actions/addImage';
 import { useState } from 'react';
 import imageCompression from 'browser-image-compression';
 import { ImageType } from '../models/image.model';
+import toast from 'react-hot-toast';
 
 export const dynamic = 'force-dynamic';
 
@@ -59,14 +60,11 @@ const AddImageForm = () => {
 
 		try {
 			//* CALL THE ADD PRODUCT ACTION
-
 			setLoading(true);
 			const res = await addImage(newImageData);
 			if (res?.success) {
 				console.log(res);
-
-				alert('image successfully added');
-				route.push(`/`);
+				toast.success('Image added successfully');
 			} else {
 				alert(res?.error);
 			}

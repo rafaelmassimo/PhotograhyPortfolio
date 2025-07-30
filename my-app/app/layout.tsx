@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import { SessionProvider } from './components/AuthProvider';
 import { Poppins } from 'next/font/google';
 import './globals.scss';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import { Toaster } from 'react-hot-toast';
 
 const poppins = Poppins({
 	subsets: ['latin'],
@@ -23,7 +26,14 @@ export default function RootLayout({
 	return (
 		<html lang="en" className={poppins.className}>
 			<SessionProvider>
-				<body >{children}</body>
+				<body>
+					<div>
+						<Toaster />
+					</div>
+					<Header />
+					{children}
+					<Footer />
+				</body>
 			</SessionProvider>
 		</html>
 	);

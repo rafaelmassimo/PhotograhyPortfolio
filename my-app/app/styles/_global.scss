@@ -2,10 +2,9 @@ html {
 	background-color: rgb(220, 220, 221);
     letter-spacing: 1px;
     color: black;
+	scrollbar-width: none;
 }
 
-.hero {
-	padding: 10rem;
-	color: red;
-	margin: 1rem;
+h1 {
+    letter-spacing: 2px;
 }
