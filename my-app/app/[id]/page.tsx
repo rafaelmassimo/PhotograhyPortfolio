@@ -37,9 +37,12 @@ const ImagesFiltered = () => {
 		<>
 			<div className="w-full">
 				<div>
-					<div className='h-16 flex items-center justify-center relative'>
-						<MobileMenu />
-					</div>
+					{/* If is true that fullScreenImage is empty than render the following element */}
+					{fullScreenImage.length === 0 && (
+						<div className="display-mobile-menu h-16 flex items-center justify-center relative">
+							<MobileMenu />
+						</div>
+					)}
 					<div className="px-4">
 						<MasonryGrid images={images} />
 					</div>
