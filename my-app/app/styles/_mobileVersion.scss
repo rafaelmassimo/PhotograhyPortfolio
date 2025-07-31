@@ -23,47 +23,10 @@
 	}
 }
 
-// Header navigation styles
-.header-nav {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	gap: 1rem;
-	
+//Hide mobile menu on desktop screens (larger than 1017px)
+//Default: mobile menu is visible, but hide it on larger screens
+.display-mobile-menu {
 	@media (min-width: 1018px) {
-		margin-inline: 2rem;
-	}
-
-	// Medium screens and below
-	@media (max-width: 1017px) {
-		flex-direction: column;
-		gap: 0.5rem;
-		
-		.nav-link {
-			display: flex;
-			justify-items: center;
-			align-items: center;
-			text-align: center;
-			justify-content: center;
-			font-size: 0.875rem; // 14px
-			color: #6b7280;
-			transition: color 0.2s ease;
-			border: 1px solid black;
-			padding: 0.5rem;
-			margin: 0 0.25rem;
-			text-decoration: none;
-			border: none;
-			
-			&:hover {
-				color: black;
-			}
-		}
-
-		// Small screens
-		@media (max-width: 640px) {
-			font-size: 0.75rem; // 12px
-			padding: 0.25rem 0.5rem;
-			margin: 0.125rem;
-		}
+		display: none;
 	}
 }

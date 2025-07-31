@@ -37,7 +37,7 @@ export default function Home() {
 		<>
 			<div className="w-full">
 				<div>
-					<div className="h-16 flex items-center justify-center relative">
+					<div className="display-mobile-menu h-16 flex items-center justify-center relative">
 						<MobileMenu />
 					</div>
 					<div className="px-4">

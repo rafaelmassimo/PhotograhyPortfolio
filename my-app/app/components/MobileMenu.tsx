@@ -16,7 +16,7 @@ const MobileMenu = () => {
 	const toggleMenu = () => setMenuOpen((prev) => !prev);
 
 	return (
-		<div className="block flex items-center justify-center lg:hidden relative z-[9998] w-full h-full">
+		<div className="block flex items-center justify-center lg:hidden relative z-[9998] w-full h-full mb-6">
 			{/* Botão Hamburger */}
 			<button onClick={toggleMenu} className="p-4 focus:outline-none relative">
 				{menuOpen ? (
