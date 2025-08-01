@@ -7,9 +7,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../api/auth/[...nextauth]/options';
 import User from '../models/user.model';
 
-export async function addImage(imageData: ImageType) {
-	if (!imageData.title || !imageData.tag || !imageData.file)
-		return { error: 'Missing required field(s)', status: 501 };
+export async function addImage(imageData: ImageType[]) {
 
 	const toPascalCase = (sentence: string) => {
 		return sentence
@@ -24,40 +22,45 @@ export async function addImage(imageData: ImageType) {
 		return { error: 'You need to be signed in to add an image' };
 	}
 
+	console.log('Connecting to database');
+	await connectDB();
+
+	const user = await User.findOne({ email: session.user.email });
+	if (!user) {
+		return { error: 'User not authorized', code: 401 };
+	}
+
 	try {
 		// Upload the images to Cloudinary
-		// Upload a single image to Cloudinary
+		const allImagesData: InstanceType<typeof Image>[] = [];
+		for (const image of imageData) {
+			const uploadedImage = await cloudinary.uploader.upload(image.file);
 
-		const uploadedImage = await cloudinary.uploader.upload(imageData.file);
+			// Get all MetaData from response from cloudinary
+			const imageMetaData = {
+				secure_url: uploadedImage.secure_url,
+				public_id: uploadedImage.public_id,
+				width: uploadedImage.width,
+				height: uploadedImage.height,
+			};
 
-		// Get all MetaData from response from cloudinary
-		const imageMetaData = {
-			secure_url: uploadedImage.secure_url,
-			public_id: uploadedImage.public_id,
-			width: uploadedImage.width,
-			height: uploadedImage.height,
-		};
+			const newImage = new Image({
+				owner: user._id,
+				title: image.title,
+				tag: toPascalCase(image.tag),
+				file: imageMetaData.secure_url,
+				height: imageMetaData.height,
+				width: imageMetaData.width,
+			});
 
-		console.log('Connecting to database');
-		await connectDB();
-
-		const user = await User.findOne({ email: session.user.email });
-		if (!user) {
-			return { error: 'User not authorized', code: 401 };
+			allImagesData.push(newImage);
 		}
-		const newImage = new Image({
-			owner: user._id,
-			title: imageData.title,
-			tag: toPascalCase(imageData.tag),
-			file: imageMetaData.secure_url,
-			height: imageMetaData.height,
-			width: imageMetaData.width,
-		});
 
-		const res = await newImage.save(); //* Save the new image
+		const res = await Promise.all(allImagesData.map(imageObj => imageObj.save()));
+	
 
 		if (res) {
-			return { success: 'Image added successfully', path: imageMetaData.secure_url };
+			return { success: `${allImagesData.length} Images added successfully`};
 		}
 	} catch (error) {
 		console.error('Error adding image:', error);

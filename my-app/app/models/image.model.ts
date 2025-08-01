@@ -4,7 +4,7 @@ import { unique } from 'next/dist/build/utils';
 export type ImageType = {
 	owner?: Types.ObjectId | string;
 	_id?: Types.ObjectId;
-	title: string;
+	title?: string;
 	tag: string;
 	file: string;
 	width?: Number;

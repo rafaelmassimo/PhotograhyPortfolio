@@ -6,6 +6,7 @@ import { useState } from 'react';
 import imageCompression from 'browser-image-compression';
 import { ImageType } from '../models/image.model';
 import toast from 'react-hot-toast';
+import { PacmanLoader } from 'react-spinners';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,14 +20,11 @@ export type NewImageType = {
 };
 
 const AddImageForm = () => {
-	const route = useRouter();
-
 	const [loading, setLoading] = useState<boolean>(false);
-	const [imageBase64, setImageBase64] = useState<string>();
+	const [imageBase64, setImageBase64] = useState<File[]>([]);
+	const [imageObjects, setImageObjects] = useState<any[]>([]);
 
 	const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-		const file = e.target.files?.[0];
-
 		const options = {
 			maxSizeMB: 0.8,
 			maxWidthOrHeight: 2400,
@@ -34,14 +32,30 @@ const AddImageForm = () => {
 			fileType: 'image/webp', // output format
 		};
 
-		try {
-			if (file) {
-				const compressedFile = await imageCompression(file, options);
-				const base64 = await imageCompression.getDataUrlFromFile(compressedFile);
-				setImageBase64(base64);
+		const files = e.target.files;
+
+		if (files) {
+			const newFilesFormat = Array.from(files);
+			const totalImages = imageBase64!.length + newFilesFormat.length;
+
+			if (totalImages > 10) {
+				e.target.value = '';
+				toast.error('You can add up to 10 images at once');
 			}
-		} catch (error) {
-			console.error('Compression error:', error);
+
+			try {
+				const compressImagePromises = newFilesFormat.map(async (newFile) => {
+					const compressedFile = await imageCompression(newFile, options);
+					return compressedFile;
+				});
+
+				const allCompressedImages = await Promise.all(compressImagePromises);
+
+				setImageBase64([...imageBase64, ...allCompressedImages]);
+			} catch (error) {
+				toast.error('Compression error: ' + (error?.toString() ?? 'Unknown error'));
+				return;
+			}
 		}
 	};
 
@@ -49,31 +63,50 @@ const AddImageForm = () => {
 		e.preventDefault();
 
 		const data = new FormData(e.currentTarget);
+		const allImagesData: any[] = [];
 
-		//* CREATE NEW OBJECT WITH THE DATA FROM FORM
-		const newImageData = {
-			title: data.get('title') as string,
-			tag: data.get('tag') as string,
-			file: imageBase64 as string,
-			location: (data.get('location') as string) || '',
-		};
+		//*PREPARE THE IMAGES FOR UPLOAD
+		for (const imageFile of imageBase64) {
+			const imageBuffer = await imageFile.arrayBuffer();
+			const imageArray = Array.from(new Uint8Array(imageBuffer));
+			const imageData = Buffer.from(imageArray);
 
+			// Convert the image data to base64
+			const imageBase64 = imageData.toString('base64');
+
+			const imagePayLoad = {
+				image: `data:${imageFile.type};base64,${imageBase64}`,
+			};
+
+			//* CREATE NEW OBJECT WITH THE DATA FROM FORM FOR EACH IMAGE
+			const newImageData = {
+				title: data.get('title') as string,
+				tag: data.get('tag') as string,
+				file: imagePayLoad.image,
+				location: (data.get('location') as string) || '',
+			};
+			allImagesData.push(newImageData);
+		}
+		// setImageObjects(allImagesData);
+		console.log(allImagesData);
+		
 		try {
 			//* CALL THE ADD PRODUCT ACTION
 			setLoading(true);
-			const res = await addImage(newImageData);
+			const res = await addImage(allImagesData);
 			if (res?.success) {
-				console.log(res);
-				toast.success('Image added successfully');
+				toast.success(res.success);
 			} else {
-				alert(res?.error);
+				toast.error(res?.error ?? 'An unknown error occurred');
 			}
 		} catch (error) {
+			alert('Error adding photos front end')
 			console.error('Error adding product:', error);
 		} finally {
 			setLoading(false);
 		}
 	};
+	// console.log(imageObjects);
 
 	return (
 		<>
@@ -88,7 +121,13 @@ const AddImageForm = () => {
 							accept="image/*"
 							className="file-input file-input-accent"
 							onChange={(e) => handleImageChange(e)}
+							multiple
 						/>
+						{imageBase64.length > 0 && (
+							<div className="text-sm text-gray-600 mt-2">
+								{imageBase64.length} image(s) selected
+							</div>
+						)}
 					</fieldset>
 
 					{/* IMAGE TITLE */}
@@ -100,7 +139,7 @@ const AddImageForm = () => {
 					{/* IMAGE TAG */}
 					<fieldset className="fieldset">
 						<legend className="fieldset-legend">Insert the Tag</legend>
-						<input type="text" name="tag" className="tag" placeholder="Type here" />
+						<input type="text" name="tag" className="tag" placeholder="Type here" multiple />
 					</fieldset>
 
 					{/* LOCATION */}
@@ -110,7 +149,7 @@ const AddImageForm = () => {
 					</fieldset>
 
 					{loading ? (
-						'Loading...'
+						<PacmanLoader color="#e8da25" />
 					) : (
 						<button className="btn btn-accent" type="submit">
 							Save Image
