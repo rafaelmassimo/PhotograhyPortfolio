@@ -18,6 +18,7 @@ const ImagesFiltered = () => {
 	const fullScreenImage = useFullScreenImage((state) => state.FullScreenImage);
 
 	useEffect(() => {
+		clearAllImages();
 		const initiateFilteredPage = async () => {
 			//* Getting All Filtered Images
 			const data = await getImagesByTag(tag as string);

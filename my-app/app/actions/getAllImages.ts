@@ -8,7 +8,9 @@ export async function getAllImages() {
 	try {
 		await connectDB();
 
-		const res = await Image.find({}).sort({createdAt: -1});
+		const res = await Image.aggregate([
+			{$sample: {size: 1000}} //Number of possibly amount of images that I'll found
+		]);
 
 		if (res) {
 			// Convert MongoDB document to plain object

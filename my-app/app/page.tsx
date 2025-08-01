@@ -20,8 +20,10 @@ export default function Home() {
 	const setImages = useImageStore((state) => state.setImages);
 	const fullScreenImage = useFullScreenImage((state) => state.FullScreenImage);
 	const setNewTags = useTagStore((state) => state.setTag);
+	const clearAllImages = useImageStore((store) => store.clearAll);
 
 	useEffect(() => {
+		clearAllImages();
 		const initiateHomePage = async () => {
 			// Getting All Images
 			const data = await getAllImages();
@@ -31,6 +33,10 @@ export default function Home() {
 			}
 		};
 		initiateHomePage();
+
+		return () => {
+			clearAllImages();
+		};
 	}, []);
 
 	return (
