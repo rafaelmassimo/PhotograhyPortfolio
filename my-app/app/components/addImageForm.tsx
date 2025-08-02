@@ -6,7 +6,7 @@ import { useState } from 'react';
 import imageCompression from 'browser-image-compression';
 import { ImageType } from '../models/image.model';
 import toast from 'react-hot-toast';
-import { PacmanLoader } from 'react-spinners';
+import { MoonLoader, PacmanLoader, SyncLoader } from 'react-spinners';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,8 +21,9 @@ export type NewImageType = {
 
 const AddImageForm = () => {
 	const [loading, setLoading] = useState<boolean>(false);
-	const [imageBase64, setImageBase64] = useState<File[]>([]);
+	const [compressedImages, setCompressedImages] = useState<File[]>([]);
 	const [imageObjects, setImageObjects] = useState<any[]>([]);
+	const [miniLoading, setMiniLoading] = useState<boolean>(false);
 
 	const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const options = {
@@ -36,7 +37,7 @@ const AddImageForm = () => {
 
 		if (files) {
 			const newFilesFormat = Array.from(files);
-			const totalImages = imageBase64!.length + newFilesFormat.length;
+			const totalImages = compressedImages!.length + newFilesFormat.length;
 
 			if (totalImages > 10) {
 				e.target.value = '';
@@ -44,6 +45,7 @@ const AddImageForm = () => {
 			}
 
 			try {
+				setMiniLoading(true);
 				const compressImagePromises = newFilesFormat.map(async (newFile) => {
 					const compressedFile = await imageCompression(newFile, options);
 					return compressedFile;
@@ -51,10 +53,12 @@ const AddImageForm = () => {
 
 				const allCompressedImages = await Promise.all(compressImagePromises);
 
-				setImageBase64([...imageBase64, ...allCompressedImages]);
+				setCompressedImages([...compressedImages, ...allCompressedImages]);
 			} catch (error) {
 				toast.error('Compression error: ' + (error?.toString() ?? 'Unknown error'));
 				return;
+			} finally {
+				setMiniLoading(false);
 			}
 		}
 	};
@@ -66,16 +70,16 @@ const AddImageForm = () => {
 		const allImagesData: any[] = [];
 
 		//*PREPARE THE IMAGES FOR UPLOAD
-		for (const imageFile of imageBase64) {
+		for (const imageFile of compressedImages) {
 			const imageBuffer = await imageFile.arrayBuffer();
 			const imageArray = Array.from(new Uint8Array(imageBuffer));
 			const imageData = Buffer.from(imageArray);
 
 			// Convert the image data to base64
-			const imageBase64 = imageData.toString('base64');
+			const compressedImages = imageData.toString('base64');
 
 			const imagePayLoad = {
-				image: `data:${imageFile.type};base64,${imageBase64}`,
+				image: `data:${imageFile.type};base64,${compressedImages}`,
 			};
 
 			//* CREATE NEW OBJECT WITH THE DATA FROM FORM FOR EACH IMAGE
@@ -89,7 +93,7 @@ const AddImageForm = () => {
 		}
 		// setImageObjects(allImagesData);
 		console.log(allImagesData);
-		
+
 		try {
 			//* CALL THE ADD PRODUCT ACTION
 			setLoading(true);
@@ -100,7 +104,7 @@ const AddImageForm = () => {
 				toast.error(res?.error ?? 'An unknown error occurred');
 			}
 		} catch (error) {
-			alert('Error adding photos front end')
+			alert('Error adding photos front end');
 			console.error('Error adding product:', error);
 		} finally {
 			setLoading(false);
@@ -114,18 +118,29 @@ const AddImageForm = () => {
 				<div className="flex flex-col justify-center items-center mb-4 gap-2">
 					{/* IMAGE FILE */}
 					<fieldset className="fieldset">
-						<legend className="fieldset-legend">Select the Image</legend>
+						<legend className="text-center fieldset-legend">Select the Images</legend>
 						<input
-							type="file"
 							name="image"
 							accept="image/*"
-							className="file-input file-input-accent"
+							type="file"
+							className="file-input file-input-ghost "
 							onChange={(e) => handleImageChange(e)}
 							multiple
 						/>
-						{imageBase64.length > 0 && (
-							<div className="text-sm text-gray-600 mt-2">
-								{imageBase64.length} image(s) selected
+
+						{/* Show a loader while the file are converted to Base64 */}
+						{miniLoading && (
+							<div className="flex flex-row items-center justify-center mt-2">
+								<MoonLoader color="#4d26bb" size={30} />
+							</div>
+						)}
+
+						{/* Show the total amount of images loaded */}
+						{compressedImages.length > 0 && !miniLoading && (
+							<div className="flex flex-col items-center justify-center h-20 text-sm text-gray-600 mt-2 overflow-y-auto">
+								{compressedImages.map((image) => (
+									<span>{image.name}</span>
+								))}
 							</div>
 						)}
 					</fieldset>
@@ -148,11 +163,24 @@ const AddImageForm = () => {
 						<input type="text" name="location" className="tag" placeholder="Type here" />
 					</fieldset>
 
+					{/* CONDITIONAL RENDERING: IF-ELSE CHAIN USING TERNARY OPERATORS */}
 					{loading ? (
+						// IF loading is true - Show PacmanLoader (form submission in progress)
 						<PacmanLoader color="#e8da25" />
+					) : miniLoading ? (
+						// ELSE IF miniLoading is true - Show button with MoonLoader (image compression in progress)
+						<button className="btn btn-accent w-[132px] h-[40px]" type="submit">
+							<MoonLoader color="#4d26bb" size={20} />
+						</button>
 					) : (
-						<button className="btn btn-accent" type="submit">
-							Save Image
+						// ELSE (both loading states are false) - Show normal submit button
+						<button
+							className="btn btn-accent"
+							type="submit"
+							disabled={compressedImages.length === 0}
+						>
+							{/* Dynamic button text based on number of images */}
+							{compressedImages.length === 0 ? 'Save Image' : 'Save Images'}
 						</button>
 					)}
 				</div>

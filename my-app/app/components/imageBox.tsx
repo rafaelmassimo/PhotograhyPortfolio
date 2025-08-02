@@ -51,7 +51,8 @@ export const ImageBox = ({
 			{isLoading && <LoadingImages />}
 			<CldImage
 				src={imageFile.file}
-				alt={imageFile.title}
+				//If the title is undefined then It'll apply the 'image' title
+				alt={imageFile.title ?? 'Image'}
 				preserveTransformations
 				height={Number(imageFile.height)}
 				width={Number(imageFile.width)}
