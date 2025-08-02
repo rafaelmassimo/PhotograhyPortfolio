@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useTagStore } from '../stores/tag.store';
 import { splitAndCapitalize } from '../utils/functions';
 
-const TagSelector = () => {
+const NewTagSelector = () => {
 	const tags = useTagStore((state) => state.tags);
 
 	return (
@@ -19,4 +19,4 @@ const TagSelector = () => {
 	);
 };
 
-export default TagSelector;
+export default NewTagSelector;

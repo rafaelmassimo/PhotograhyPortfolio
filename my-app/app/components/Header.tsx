@@ -3,8 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import NavUserLinks from './NavUserLinks';
-import TagSelector from './TagSelector';
-
+import NewTagSelector from './NewTagSelector';
 
 const Header = () => {
 	return (
@@ -16,8 +15,8 @@ const Header = () => {
 				</Link>
 
 				<NavUserLinks />
-
-				<TagSelector />
+				
+				<NewTagSelector />
 			</div>
 		</header>
 	);
