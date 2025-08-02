@@ -1,5 +1,4 @@
 import React from 'react';
-import { useImageStore } from '../stores/image.store';
 import Link from 'next/link';
 import { useTagStore } from '../stores/tag.store';
 import { splitAndCapitalize } from '../utils/functions';
