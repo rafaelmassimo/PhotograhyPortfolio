@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import TagSelector from './tagSelector';
+import TagSelector from './TagSelector';
 import { signOut, useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import MobileMenu from './MobileMenu';

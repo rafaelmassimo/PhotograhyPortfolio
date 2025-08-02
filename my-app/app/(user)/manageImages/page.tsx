@@ -14,10 +14,9 @@ import MasonryGridDelete from '@/app/components/MansoryGridDelete';
 import { useImageStore } from '@/app/stores/image.store';
 import { useTagStore } from '@/app/stores/tag.store';
 import toast from 'react-hot-toast';
+import SearchTagInput from '@/app/components/SearchTagInput';
 
 export default function ManageImages() {
-	const [session, setSession] = useState<Session | null>(null);
-
 	const images = useImageStore((state) => state.images);
 	const setImages = useImageStore((state) => state.setImages);
 	const deleteImageStore = useImageStore((state) => state.deleImage);
@@ -44,7 +43,7 @@ export default function ManageImages() {
 			removeTag(imageTag);
 			toast.success('Image deleted');
 		} else {
-			alert(res?.error);
+			toast.error(res?.error ?? 'Unknonw Error While Deleting Image');
 		}
 	};
 
@@ -52,6 +51,7 @@ export default function ManageImages() {
 		<div className=" m-4">
 			<div className="hero flex flex-row m-4">
 				<div className="px-4">
+					<SearchTagInput/>
 					<MasonryGridDelete deleteImage={handleDeleteImage} images={images} />
 				</div>
 			</div>
