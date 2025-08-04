@@ -6,6 +6,7 @@ import { ImageType } from '../models/image.model';
 
 import '../styles/all.scss';
 import { ImageBox } from './imageBox';
+import LoadingImages from './LoadingImages';
 
 const breakpointColumnsObj = {
 	default: 3,
@@ -19,6 +20,13 @@ interface MasonryGridProps {
 	deleteImage: (id: string, tag: string) => void;
 }
 const MasonryGridDelete: React.FC<MasonryGridProps> = ({ images, deleteImage }) => {
+	if (images.length === 0) {
+		return (
+			<div className="flex flex-col justify-start items-center">
+				<LoadingImages />
+			</div>
+		);
+	}
 	return (
 		<Masonry
 			breakpointCols={breakpointColumnsObj}
@@ -34,14 +42,10 @@ const MasonryGridDelete: React.FC<MasonryGridProps> = ({ images, deleteImage }) 
 					>
 						Delete
 					</button>
-                    <br />
-                    <span>
-						Title: {image.title}
-					</span>
-                    <br />
-					<span>
-						Tag: {image.tag}
-					</span>
+					<br />
+					<span>Title: {image.title}</span>
+					<br />
+					<span>Tag: {image.tag}</span>
 				</div>
 			))}
 		</Masonry>

@@ -48,13 +48,11 @@ export default function ManageImages() {
 	};
 
 	return (
-		<div className=" m-4">
-			<div className="hero flex flex-row m-4">
-				<div className="px-4">
+		<div className="w-full">
+				<div className="px-4 ">
 					<SearchTagInput/>
 					<MasonryGridDelete deleteImage={handleDeleteImage} images={images} />
 				</div>
-			</div>
 		</div>
 	);
 }
