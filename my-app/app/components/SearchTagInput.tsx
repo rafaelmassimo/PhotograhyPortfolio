@@ -20,7 +20,7 @@ const SearchTagInput = () => {
 		<div className="flex flex-row items-baseline justify-center h-20">
 			<div>
 				<fieldset className="fieldset">
-					<legend className="fieldset-legend">Insert the Tag To Search</legend>
+					<legend className="fieldset-legend text-black">Insert the Tag To Search</legend>
 					<input
 						type="text"
 						name="search"

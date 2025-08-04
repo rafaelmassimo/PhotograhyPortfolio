@@ -28,10 +28,10 @@ const MasonryGridDelete: React.FC<MasonryGridProps> = ({ images }) => {
 	const getImages = useImageStore((store) => store.images)
 	const clearTags = useTagStore((store)=> store.clearAll);
 	const setNewTags = useTagStore((store)=> store.setTag);
-	const [startDeleting, setStartDeleting] = useState<boolean>(false);
+	const [imageToDelete, setImageToDelete] = useState<string | undefined>('')
 
-	const handleDeleteImage = async (imageId: string, imageTag: string) => {
-		setStartDeleting(true);
+	const handleDeleteImage = async (imageId: string) => {
+		setImageToDelete(imageId)
 
 		try {
 			const res = await deleteImage(imageId);
@@ -52,7 +52,7 @@ const MasonryGridDelete: React.FC<MasonryGridProps> = ({ images }) => {
 		} catch (error) {
 			toast.error((error as Error)?.message ?? 'Unknown Error While Deleting Image');
 		} finally {
-			setStartDeleting(false);
+			setImageToDelete(undefined);
 		}
 	};
 
@@ -72,19 +72,18 @@ const MasonryGridDelete: React.FC<MasonryGridProps> = ({ images }) => {
 			{images.map((image) => (
 				<div key={image._id?.toString()} className="masonry-item">
 					<ImageBox imageFile={image} />
-
-					{startDeleting ? (
+					{/* Here I'm comparing if the ID that has been set from calling handleDeleteImage is the same inside this loop, if yes then show the LoadingImages
+					after that will be set as undefined to will stop to show the loading */}
+					{imageToDelete === image._id?.toString()  ? (
 						<button
-							onClick={() => {
-								setStartDeleting(!startDeleting);
-							}}
+							
 							className="btn btn-error"
 						>
 							Deleting <MoonLoader color="#4d26bb" size={20} />
 						</button>
 					) : (
 						<button
-							onClick={() => handleDeleteImage(image._id!.toString(), image.tag)}
+							onClick={() => handleDeleteImage(image._id!.toString())}
 							className="btn btn-error"
 						>
 							Delete
