@@ -5,6 +5,7 @@ import './globals.scss';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import { Toaster } from 'react-hot-toast';
+import MobileMenuUpdated from './components/MobileMenuUpdated';
 
 const poppins = Poppins({
 	subsets: ['latin'],
@@ -35,6 +36,7 @@ export default function RootLayout({
 					<div>
 						<Toaster />
 					</div>
+					<MobileMenuUpdated/>
 					<Header />
 					{children}
 					<Footer />

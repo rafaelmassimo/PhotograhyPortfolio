@@ -1,13 +1,25 @@
 import Image from 'next/image';
 import React from 'react';
-import '@/app/styles/all.scss'
+import '@/app/styles/all.scss';
+import { RiCloseLargeLine } from 'react-icons/ri';
+import { useMobileMenu } from '../stores/mobileMenu.store';
 
 const MobileMenuOpener = () => {
+	const menuOpened = useMobileMenu((state) => state.menuOpened);
+	const setMenuOpened = useMobileMenu((state) => state.setOpenOrClose);
 	return (
-		<div className='flex flex-row items-center justify-center bob'>
-			<Image src={'/logo.png'} alt="fujifilm logo" width={70} height={40} />
-            <span className='text-[18px] ml-2 tracking-tight'>Dream</span>
-		</div>
+		<>
+			{!menuOpened && (
+				<button onClick={() => setMenuOpened(!menuOpened)} className="">
+					<span className="block">
+						<div className="flex flex-row items-center justify-center bob">
+							<Image src={'/logo.png'} alt="fujifilm logo" width={70} height={40} />
+							<span className="text-[18px] ml-2 tracking-tight">Dream</span>
+						</div>
+					</span>
+				</button>
+			)}
+		</>
 	);
 };
 

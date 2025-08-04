@@ -14,6 +14,8 @@ import FullScreenImageViewer from './components/FullScreenImageViewer';
 import { useFullScreenImage } from './stores/fullScreenImage.store';
 import { useTagStore } from './stores/tag.store';
 import MobileMenu from './components/MobileMenu';
+import MobileMenuUpdated from './components/MobileMenuUpdated';
+import MobileMenuOpener from './components/MobileMenuOpener';
 
 export default function Home() {
 	const images = useImageStore((state) => state.images);
@@ -41,14 +43,14 @@ export default function Home() {
 
 	return (
 		<>
+			{/* This makes the fuji logo stopping being showing if the full screen image is true */}
+			{fullScreenImage.length === 0 && (
+				<div className="display-mobile-menu h-16 flex items-center justify-center relative">
+					<MobileMenuOpener />
+				</div>
+			)}
 			<div className="w-full">
 				<div>
-					{/* If is true that fullScreenImage is empty than render the following element */}
-					{fullScreenImage.length === 0 && (
-						<div className="display-mobile-menu h-16 flex items-center justify-center relative">
-							<MobileMenu />
-						</div>
-					)}
 					<div className="px-4">
 						<MasonryGrid images={images} />
 					</div>
