@@ -9,6 +9,7 @@ import MasonryGrid from '../components/MansoryGrid';
 import { useFullScreenImage } from '../stores/fullScreenImage.store';
 import { useSession } from 'next-auth/react';
 import MobileMenu from '../components/MobileMenu';
+import MobileMenuOpener from '../components/MobileMenuOpener';
 
 const ImagesFiltered = () => {
 	const { id: tag } = useParams();
@@ -41,7 +42,7 @@ const ImagesFiltered = () => {
 					{/* If is true that fullScreenImage is empty than render the following element */}
 					{fullScreenImage.length === 0 && (
 						<div className="display-mobile-menu h-16 flex items-center justify-center relative">
-							<MobileMenu />
+							<MobileMenuOpener />
 						</div>
 					)}
 					<div className="px-4">
