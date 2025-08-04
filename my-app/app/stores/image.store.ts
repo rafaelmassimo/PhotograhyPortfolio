@@ -1,3 +1,4 @@
+import { getAllImages } from '@/app/actions/getAllImages';
 import { create, type StateCreator } from 'zustand';
 import { ImageType } from '../models/image.model';
 import { devtools } from 'zustand/middleware';

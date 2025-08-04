@@ -35,23 +35,13 @@ export default function ManageImages() {
 		initiateManagePage();
 	}, []);
 
-	const handleDeleteImage = async (imageId: string, imageTag: string) => {
-		const res = await deleteImage(imageId);
-		if (res?.status === 200) {
-			//* Remove this image from store
-			deleteImageStore(imageId);
-			removeTag(imageTag);
-			toast.success('Image deleted');
-		} else {
-			toast.error(res?.error ?? 'Unknonw Error While Deleting Image');
-		}
-	};
+	
 
 	return (
 		<div className="w-full">
 				<div className="px-4 ">
 					<SearchTagInput/>
-					<MasonryGridDelete deleteImage={handleDeleteImage} images={images} />
+					<MasonryGridDelete images={images} />
 				</div>
 		</div>
 	);

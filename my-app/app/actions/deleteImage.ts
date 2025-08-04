@@ -41,7 +41,7 @@ async function deleteImage(imageId: string) {
 		}
 	} catch (error) {
 		console.error('Error deleting image:', error);
-		return { message: (error as Error).message, status: 500 };
+		throw new Error('Error Deleting Image');
 	}
 }
 
