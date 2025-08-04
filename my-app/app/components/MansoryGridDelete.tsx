@@ -74,17 +74,19 @@ const MasonryGridDelete: React.FC<MasonryGridProps> = ({ images }) => {
 					<ImageBox imageFile={image} />
 					{/* Here I'm comparing if the ID that has been set from calling handleDeleteImage is the same inside this loop, if yes then show the LoadingImages
 					after that will be set as undefined to will stop to show the loading */}
+
+					<div className='mt-2'>
 					{imageToDelete === image._id?.toString()  ? (
 						<button
-							
-							className="btn btn-error"
+						
+						className="btn btn-error"
 						>
 							Deleting <MoonLoader color="#4d26bb" size={20} />
 						</button>
 					) : (
 						<button
-							onClick={() => handleDeleteImage(image._id!.toString())}
-							className="btn btn-error"
+						onClick={() => handleDeleteImage(image._id!.toString())}
+						className="btn btn-error"
 						>
 							Delete
 						</button>
@@ -94,6 +96,7 @@ const MasonryGridDelete: React.FC<MasonryGridProps> = ({ images }) => {
 					<span>Title: {image.title}</span>
 					<br />
 					<span>Tag: {image.tag}</span>
+					</div>
 				</div>
 			))}
 		</Masonry>
