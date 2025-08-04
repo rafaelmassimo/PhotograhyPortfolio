@@ -18,7 +18,7 @@ const ButtonSearchMostRecent = () => {
 	return (
 		<div>
 			<button
-				className="btn btn-accent"
+				className="btn btn-accent recentImagesButton"
 				type="button" // Changed from "submit" to "button"
 				onClick={handleClick}
 			>

@@ -8,3 +8,18 @@ html {
 h1 {
     letter-spacing: 2px;
 }
+
+.recentImagesButton {
+
+    @media (max-width: 1017px) {
+		font-size: 15px;
+        margin-inline: auto;
+        padding-block: 10px;
+	}
+
+    @media (max-width: 500px) {
+		font-size: 10px;
+        margin-inline: auto;
+        padding-block: 10px;
+	}
+}
