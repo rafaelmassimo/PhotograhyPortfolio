@@ -1,14 +1,14 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { addImage } from '../actions/addImage';
 import { useState } from 'react';
 import imageCompression from 'browser-image-compression';
 import toast from 'react-hot-toast';
 import { MoonLoader, PacmanLoader } from 'react-spinners';
 import { uploadImageToCloudinaryServerSide } from '../actions/uploadToCloudinary';
-import { form } from 'framer-motion/client';
 
-export const dynamic = 'force-dynamic';
 
 export type NewImageType = {
 	title: string;
@@ -134,6 +134,9 @@ const AddImageForm = () => {
 		} finally {
 			setLoading(false);
 			setUploadedImageStatus(0);
+			setCompressedImages([]);
+			// Reset the entire form
+			e.currentTarget.reset();
 		}
 	};
 
@@ -162,7 +165,7 @@ const AddImageForm = () => {
 
 						{/* Show the total amount of images loaded */}
 						{compressedImages.length > 0 && !miniLoading && (
-							<div className='flex flex-col items-center justify-center'>
+							<div className="flex flex-col items-center justify-center">
 								<div className="flex flex-col items-center justify-center h-20 text-sm text-gray-600 mt-2 overflow-y-auto">
 									{compressedImages.map((image) => (
 										<span>{image.name}</span>
@@ -176,7 +179,7 @@ const AddImageForm = () => {
 							<div className="flex flex-col items-center justify-center h-20 text-sm text-gray-600 mt-2 overflow-y-auto">
 								<span className="badge badge-neutral">
 									{uploadedImageStatus === compressedImages.length
-										? 'Saving Images to the DataBase...'
+										? 'Saving Images into the DataBase...'
 										: `Images Uploaded ${uploadedImageStatus}/${compressedImages.length}`}
 								</span>
 							</div>
@@ -206,6 +209,7 @@ const AddImageForm = () => {
 					{loading && <PacmanLoader color="#e8da25" />}
 
 					{compressedImages.length > 0 &&
+						!loading &&
 						(miniLoading ? (
 							<button className="btn btn-accent w-[132px] h-[40px]" type="submit">
 								<MoonLoader color="#4d26bb" size={20} />
