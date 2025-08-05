@@ -1,12 +1,12 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { addImage } from '../actions/addImage';
 import { useState } from 'react';
 import imageCompression from 'browser-image-compression';
-import { ImageType } from '../models/image.model';
 import toast from 'react-hot-toast';
-import { MoonLoader, PacmanLoader, SyncLoader } from 'react-spinners';
+import { MoonLoader, PacmanLoader } from 'react-spinners';
+import cloudinary from '@/config/cloudinary';
+import { uploadImageToCloudinaryServerSide } from '../actions/uploadToCloudinary';
 
 export const dynamic = 'force-dynamic';
 
@@ -22,8 +22,8 @@ export type NewImageType = {
 const AddImageForm = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [compressedImages, setCompressedImages] = useState<File[]>([]);
-	const [imageObjects, setImageObjects] = useState<any[]>([]);
 	const [miniLoading, setMiniLoading] = useState<boolean>(false);
+	const [uploadedImageStatus, setUploadedImageStatus] = useState<number>(0);
 
 	const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const options = {
@@ -69,34 +69,36 @@ const AddImageForm = () => {
 		const data = new FormData(e.currentTarget);
 		const allImagesData: any[] = [];
 
-		//*PREPARE THE IMAGES FOR UPLOAD
-		for (const imageFile of compressedImages) {
-			const imageBuffer = await imageFile.arrayBuffer();
-			const imageArray = Array.from(new Uint8Array(imageBuffer));
-			const imageData = Buffer.from(imageArray);
-
-			// Convert the image data to base64
-			const compressedImages = imageData.toString('base64');
-
-			const imagePayLoad = {
-				image: `data:${imageFile.type};base64,${compressedImages}`,
-			};
-
-			//* CREATE NEW OBJECT WITH THE DATA FROM FORM FOR EACH IMAGE
-			const newImageData = {
-				title: data.get('title') as string,
-				tag: data.get('tag') as string,
-				file: imagePayLoad.image,
-				location: (data.get('location') as string) || '',
-			};
-			allImagesData.push(newImageData);
-		}
-		// setImageObjects(allImagesData);
-		console.log(allImagesData);
-
 		try {
-			//* CALL THE ADD PRODUCT ACTION
-			setLoading(true);
+			//*PREPARE THE IMAGES FOR UPLOAD
+			for (const imageFile of compressedImages) {
+				const imageBuffer = await imageFile.arrayBuffer();
+				const imageArray = Array.from(new Uint8Array(imageBuffer));
+				const imageData = Buffer.from(imageArray);
+
+				//? Convert the image data to base64
+				const compressedImages = imageData.toString('base64');
+
+				const imagePayLoad = {
+					image: `data:${imageFile.type};base64,${compressedImages}`,
+				};
+
+				//* UPLOADING IMAGE TO CLOUDINARY
+				const uploadedImage = await uploadImageToCloudinaryServerSide(imagePayLoad.image);
+
+				//* CREATE NEW OBJECT WITH THE DATA FROM FORM FOR EACH IMAGE
+				const newImageData = {
+					title: data.get('title') as string,
+					tag: data.get('tag') as string,
+					file: uploadedImage?.file,
+					location: (data.get('location') as string) || '',
+					width: uploadedImage?.sizes.width,
+					height: uploadedImage?.sizes.height,
+				};
+				allImagesData.push(newImageData);
+				setUploadedImageStatus((prev) => prev + 1);
+			}
+			//* SAVE NOW NEW IMAGES TO THE DATA BASE MONGODB
 			const res = await addImage(allImagesData);
 			if (res?.success) {
 				toast.success(res.success);
@@ -104,13 +106,12 @@ const AddImageForm = () => {
 				toast.error(res?.error ?? 'An unknown error occurred');
 			}
 		} catch (error) {
-			alert('Error adding photos front end');
+			alert(error);
 			console.error('Error adding product:', error);
 		} finally {
 			setLoading(false);
 		}
 	};
-	// console.log(imageObjects);
 
 	return (
 		<>
@@ -141,6 +142,16 @@ const AddImageForm = () => {
 								{compressedImages.map((image) => (
 									<span>{image.name}</span>
 								))}
+							</div>
+						)}
+
+						{uploadedImageStatus > 0 && !miniLoading && (
+							<div className="flex flex-col items-center justify-center h-20 text-sm text-gray-600 mt-2 overflow-y-auto">
+								<span>
+									{uploadedImageStatus === compressedImages.length
+										? 'Saving Images to the DataBase...'
+										: `Images Uploaded ${uploadedImageStatus}/${compressedImages.length}`}
+								</span>
 							</div>
 						)}
 					</fieldset>

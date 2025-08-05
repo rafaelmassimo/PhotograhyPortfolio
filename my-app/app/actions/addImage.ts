@@ -34,23 +34,15 @@ export async function addImage(imageData: ImageType[]) {
 		// Upload the images to Cloudinary
 		const allImagesData: InstanceType<typeof Image>[] = [];
 		for (const image of imageData) {
-			const uploadedImage = await cloudinary.uploader.upload(image.file);
-
-			// Get all MetaData from response from cloudinary
-			const imageMetaData = {
-				secure_url: uploadedImage.secure_url,
-				public_id: uploadedImage.public_id,
-				width: uploadedImage.width,
-				height: uploadedImage.height,
-			};
-
+			
+			//* CREATING NEW IMAGES (MONGOOSE OBJECTS) AND SAVING INSIDE AN ARRAY
 			const newImage = new Image({
 				owner: user._id,
 				title: image.title,
 				tag: toPascalCase(image.tag),
-				file: imageMetaData.secure_url,
-				height: imageMetaData.height,
-				width: imageMetaData.width,
+				file: image.file,
+				height: image.height,
+				width: image.width,
 			});
 
 			allImagesData.push(newImage);
