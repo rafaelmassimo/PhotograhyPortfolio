@@ -5,8 +5,8 @@ import { useState } from 'react';
 import imageCompression from 'browser-image-compression';
 import toast from 'react-hot-toast';
 import { MoonLoader, PacmanLoader } from 'react-spinners';
-import cloudinary from '@/config/cloudinary';
 import { uploadImageToCloudinaryServerSide } from '../actions/uploadToCloudinary';
+import { form } from 'framer-motion/client';
 
 export const dynamic = 'force-dynamic';
 
@@ -67,9 +67,30 @@ const AddImageForm = () => {
 		e.preventDefault();
 
 		const data = new FormData(e.currentTarget);
+
+		//* Validation form
+		const title = data.get('title') as string;
+		const tag = data.get('tag') as string;
+
+		if (!title?.trim()) {
+			toast.error('Please enter a title');
+			return;
+		}
+
+		if (!tag?.trim()) {
+			toast.error('Please enter a tag');
+			return;
+		}
+
+		if (compressedImages.length === 0) {
+			toast.error('Please select at least one image');
+			return;
+		}
+
 		const allImagesData: any[] = [];
 
 		try {
+			setLoading(true);
 			//*PREPARE THE IMAGES FOR UPLOAD
 			for (const imageFile of compressedImages) {
 				const imageBuffer = await imageFile.arrayBuffer();
@@ -100,16 +121,19 @@ const AddImageForm = () => {
 			}
 			//* SAVE NOW NEW IMAGES TO THE DATA BASE MONGODB
 			const res = await addImage(allImagesData);
+
+			//*RESULT
 			if (res?.success) {
 				toast.success(res.success);
 			} else {
-				toast.error(res?.error ?? 'An unknown error occurred');
+				toast.error(res?.error ?? 'An error while saving images');
 			}
 		} catch (error) {
 			alert(error);
-			console.error('Error adding product:', error);
+			console.error('Error adding Images:', error);
 		} finally {
 			setLoading(false);
+			setUploadedImageStatus(0);
 		}
 	};
 
@@ -138,16 +162,19 @@ const AddImageForm = () => {
 
 						{/* Show the total amount of images loaded */}
 						{compressedImages.length > 0 && !miniLoading && (
-							<div className="flex flex-col items-center justify-center h-20 text-sm text-gray-600 mt-2 overflow-y-auto">
-								{compressedImages.map((image) => (
-									<span>{image.name}</span>
-								))}
+							<div className='flex flex-col items-center justify-center'>
+								<div className="flex flex-col items-center justify-center h-20 text-sm text-gray-600 mt-2 overflow-y-auto">
+									{compressedImages.map((image) => (
+										<span>{image.name}</span>
+									))}
+								</div>
+								<span className="badge badge-warning mt-2">{`${compressedImages.length} Selected`}</span>
 							</div>
 						)}
 
 						{uploadedImageStatus > 0 && !miniLoading && (
 							<div className="flex flex-col items-center justify-center h-20 text-sm text-gray-600 mt-2 overflow-y-auto">
-								<span>
+								<span className="badge badge-neutral">
 									{uploadedImageStatus === compressedImages.length
 										? 'Saving Images to the DataBase...'
 										: `Images Uploaded ${uploadedImageStatus}/${compressedImages.length}`}
@@ -159,13 +186,13 @@ const AddImageForm = () => {
 					{/* IMAGE TITLE */}
 					<fieldset className="fieldset">
 						<legend className="fieldset-legend">Insert the Title</legend>
-						<input type="text" name="title" className="title" placeholder="Type here" />
+						<input type="text" name="title" className="title" placeholder="Type here" required />
 					</fieldset>
 
 					{/* IMAGE TAG */}
 					<fieldset className="fieldset">
 						<legend className="fieldset-legend">Insert the Tag</legend>
-						<input type="text" name="tag" className="tag" placeholder="Type here" multiple />
+						<input type="text" name="tag" className="tag" placeholder="Type here" required />
 					</fieldset>
 
 					{/* LOCATION */}
@@ -175,25 +202,20 @@ const AddImageForm = () => {
 					</fieldset>
 
 					{/* CONDITIONAL RENDERING: IF-ELSE CHAIN USING TERNARY OPERATORS */}
-					{loading ? (
-						// IF loading is true - Show PacmanLoader (form submission in progress)
-						<PacmanLoader color="#e8da25" />
-					) : miniLoading ? (
-						// ELSE IF miniLoading is true - Show button with MoonLoader (image compression in progress)
-						<button className="btn btn-accent w-[132px] h-[40px]" type="submit">
-							<MoonLoader color="#4d26bb" size={20} />
-						</button>
-					) : (
-						// ELSE (both loading states are false) - Show normal submit button
-						<button
-							className="btn btn-accent"
-							type="submit"
-							disabled={compressedImages.length === 0}
-						>
-							{/* Dynamic button text based on number of images */}
-							{compressedImages.length === 0 ? 'Save Image' : 'Save Images'}
-						</button>
-					)}
+
+					{loading && <PacmanLoader color="#e8da25" />}
+
+					{compressedImages.length > 0 &&
+						(miniLoading ? (
+							<button className="btn btn-accent w-[132px] h-[40px]" type="submit">
+								<MoonLoader color="#4d26bb" size={20} />
+							</button>
+						) : (
+							<button className="btn btn-accent" type="submit">
+								{/* Dynamic button text based on number of images */}
+								{compressedImages.length === 1 ? 'Save Image' : 'Save Images'}
+							</button>
+						))}
 				</div>
 			</form>
 		</>
