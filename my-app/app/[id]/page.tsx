@@ -17,10 +17,15 @@ const ImagesFiltered = () => {
 	const fullScreenImage = useFullScreenImage((state) => state.FullScreenImage);
 
 	useEffect(() => {
+		// Decode the URL parameter to get the original tag value
+		const decodedTag = tag ? decodeURIComponent(tag.toString()) : '';
+		console.log(decodedTag);
+		
 		clearAllImages();
+
 		const initiateFilteredPage = async () => {
 			//* Getting All Filtered Images
-			const data = await getImagesByTag(tag as string);
+			const data = await getImagesByTag(decodedTag);
 			if (Array.isArray(data) && data.length > 0) {
 				setImages(data);
 			}
