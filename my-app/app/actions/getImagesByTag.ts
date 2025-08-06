@@ -9,7 +9,7 @@ export const getImagesByTag = async (query: string) => {
 
         const images = await Image.aggregate([{
             $match: {
-                tag: {$regex: query, $option: 'i'}
+                tag: {$regex: query, $options: 'i'}
             }
         },
         {
