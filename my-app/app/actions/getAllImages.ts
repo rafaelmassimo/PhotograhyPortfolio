@@ -9,7 +9,7 @@ export async function getAllImages() {
 		await connectDB();
 
 		const res = await Image.aggregate([
-			{$sample: {size: 1000}} //Number of possibly amount of images that I'll found
+			{$sample: {size: 250}} //Number of possibly amount of images that I'll found
 		]);
 
 		if (res) {

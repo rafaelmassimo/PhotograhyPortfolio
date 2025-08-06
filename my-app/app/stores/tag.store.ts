@@ -10,6 +10,7 @@ interface State {
 // Then, define the actions (functions) that will update or interact with that state
 interface Actions {
 	setTag: (images: ImageType[] | ImageType) => void;
+	setTagByTags: (tags: string | string[]) => void;
 	deleTag: (id: string) => void;
 	clearAll: () => void;
 }
@@ -27,6 +28,27 @@ const storeAPI: StateCreator<State & Actions> = (set) => ({
 			} else {
 				// Single image - add its tag if not already present
 				const newTag = images.tag;
+				if (!state.tags.includes(newTag)) {
+					return { tags: [...state.tags, newTag] };
+				}
+				return state;
+			}
+		}),
+
+	setTagByTags: (tags: string | string[]) =>
+		set((state) => {
+			if (Array.isArray(tags)) {
+				// Use includes method to check each tag
+				const updatedTags = [...state.tags];
+				tags.forEach((tag) => {
+					if (!state.tags.includes(tag)) {
+						updatedTags.push(tag);
+					}
+				});
+				return { tags: updatedTags };
+			} else {
+				// Single tag - add its tag if not already present
+				const newTag = tags;
 				if (!state.tags.includes(newTag)) {
 					return { tags: [...state.tags, newTag] };
 				}

@@ -6,6 +6,7 @@ import NavUserLinks from './NavUserLinks';
 import NewTagSelector from './NewTagSelector';
 
 const Header = () => {
+	
 	return (
 		<header className="w-full">
 			{/* Navigation Bar */}

@@ -23,8 +23,8 @@ const MobileMenuUpdated = () => {
 							<RiCloseLargeLine className={`iconStyles mt-2 ${menuOpened ? 'iconOpening' : 'iconClosing'}`} />
 						</span>
 					</button>
-					{tags.map((tag) => (
-						<Link href={`/${tag}`} className="my-2 p-2" onClick={() => setMenuOpened(false)}>
+					{tags.map((tag, i) => (
+						<Link key={i} href={`/${tag}`} className="my-2 p-2" onClick={() => setMenuOpened(false)}>
 							<span className="text-black hover:underline cursor-pointer">
 								{splitAndCapitalize(tag)}
 							</span>
