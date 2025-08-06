@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 // If I'm going to import all.scss means that I'm applying all styles coming from all .scss file that I'm adding in All.scss
 // Now I can use directly the classname coming from all.scss that it will work
 import './styles/all.scss';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useImageStore } from './stores/image.store';
 import { getAllImages } from './actions/getAllImages';
 import MasonryGrid from './components/MansoryGrid';
