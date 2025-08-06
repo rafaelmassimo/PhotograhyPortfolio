@@ -8,7 +8,7 @@ import imageCompression from 'browser-image-compression';
 import toast from 'react-hot-toast';
 import { MoonLoader, PacmanLoader } from 'react-spinners';
 import { uploadImageToCloudinaryServerSide } from '../actions/uploadToCloudinary';
-
+import { useTagStore } from '../stores/tag.store';
 
 export type NewImageType = {
 	title: string;
@@ -24,6 +24,7 @@ const AddImageForm = () => {
 	const [compressedImages, setCompressedImages] = useState<File[]>([]);
 	const [miniLoading, setMiniLoading] = useState<boolean>(false);
 	const [uploadedImageStatus, setUploadedImageStatus] = useState<number>(0);
+	const setNewTagsByTags = useTagStore((state) => state.setTagByTags);
 
 	const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const options = {
@@ -124,6 +125,7 @@ const AddImageForm = () => {
 
 			//*RESULT
 			if (res?.success) {
+				setNewTagsByTags(tag);
 				toast.success(res.success);
 			} else {
 				toast.error(res?.error ?? 'An error while saving images');
