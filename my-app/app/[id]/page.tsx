@@ -7,8 +7,6 @@ import { getImagesByTag } from '../actions/getImagesByTag';
 import FullScreenImageViewer from '../components/FullScreenImageViewer';
 import MasonryGrid from '../components/MansoryGrid';
 import { useFullScreenImage } from '../stores/fullScreenImage.store';
-import { useSession } from 'next-auth/react';
-import MobileMenu from '../components/MobileMenu';
 import MobileMenuOpener from '../components/MobileMenuOpener';
 
 const ImagesFiltered = () => {

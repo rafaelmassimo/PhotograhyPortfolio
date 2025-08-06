@@ -13,8 +13,6 @@ import MasonryGrid from './components/MansoryGrid';
 import FullScreenImageViewer from './components/FullScreenImageViewer';
 import { useFullScreenImage } from './stores/fullScreenImage.store';
 import { useTagStore } from './stores/tag.store';
-import MobileMenu from './components/MobileMenu';
-import MobileMenuUpdated from './components/MobileMenuUpdated';
 import MobileMenuOpener from './components/MobileMenuOpener';
 
 export default function Home() {
