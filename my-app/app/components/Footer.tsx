@@ -1,6 +1,5 @@
 'use client';
 
-import { div } from 'framer-motion/client';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import React from 'react';
 import { AiFillFire } from 'react-icons/ai';

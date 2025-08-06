@@ -1,12 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useTagStore } from '../stores/tag.store';
-import { RxHamburgerMenu } from 'react-icons/rx';
 import { RiCloseLargeLine } from 'react-icons/ri';
-import MobileMenuOpener from './MobileMenuOpener';
 import { splitAndCapitalize } from '../utils/functions';
 import { useMobileMenu } from '../stores/mobileMenu.store';
 import '@/app/styles/all.scss';
