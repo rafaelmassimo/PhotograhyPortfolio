@@ -7,9 +7,15 @@ export const getImagesByTag = async (query: string) => {
     try {
         await connectDB();
 
-        const images = await Image.find({
-            tag: { $regex: query, $options: 'i' }
-        });
+        const images = await Image.aggregate([{
+            $match: {
+                tag: {$regex: query, $option: 'i'}
+            }
+        },
+        {
+            $sample: {size:1000}
+        }
+    ]);
 
         if (images && images.length > 0) {
             const plainImages = JSON.parse(JSON.stringify(images));
