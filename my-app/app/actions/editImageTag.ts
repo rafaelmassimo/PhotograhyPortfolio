@@ -4,29 +4,46 @@ import { toPascalCase } from './../utils/functions';
 import connectDB from '@/config/database';
 import Image from '../models/image.model';
 
-export const editImageTag = async (imageId: string, owner: string, newTag: string, newTitle?:string) => {
-	
+export const editImageTag = async (
+	imageId: string,
+	owner: string,
+	newTag: string,
+	newTitle?: string,
+) => {
 	try {
 		await connectDB();
 
-		const checkOwner = await Image.findOne({ _id: imageId });
-		
-		if (checkOwner?.owner?.toString() !== owner) {
+		const data = await Image.findOne({ _id: imageId });
+
+		if (data?.owner?.toString() !== owner) {
 			throw new Error('You are not the owner of this image');
 		}
+
 		const images = await Image.findByIdAndUpdate(
 			imageId,
 			{
 				$set: {
-					tag: toPascalCase(newTag),
-					title: newTitle
+					tag: newTag ? toPascalCase(newTag) : data.tag,
+					title: newTitle ?? data.title,
 				},
 			},
 			{ new: true },
 		);
+		const writeMessage = () => {
+			const titleToUpdate = data.title === newTitle ? null : newTitle;
+			const tagToUpdate = data.tag === newTag ? null : newTag;
+			if (tagToUpdate && !titleToUpdate) {
+				return 'Tag Updated Successfully';
+			} else if (!tagToUpdate && titleToUpdate) {
+				return 'Title Updated Successfully';
+			} else if (tagToUpdate && titleToUpdate) {
+				return 'Tag and Title Updated Successfully';
+			}
+			return 'No changes made';
+		};
 
 		if (images) {
-			return { message: 'Tag Updated Successfully' };
+			return { message: `${writeMessage()}` };
 		} else {
 			return { message: 'Image not found', status: 404 };
 		}
