@@ -6,16 +6,9 @@ import cloudinary from '@/config/cloudinary';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../api/auth/[...nextauth]/options';
 import User from '../models/user.model';
+import { toPascalCase } from '../utils/functions';
 
 export async function addImage(imageData: ImageType[]) {
-
-	const toPascalCase = (sentence: string) => {
-		return sentence
-			.split(' ')
-			.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-			.join('');
-	};
-
 	const session = await getServerSession(authOptions);
 
 	if (!session) {
@@ -34,7 +27,6 @@ export async function addImage(imageData: ImageType[]) {
 		// Upload the images to Cloudinary
 		const allImagesData: InstanceType<typeof Image>[] = [];
 		for (const image of imageData) {
-			
 			//* CREATING NEW IMAGES (MONGOOSE OBJECTS) AND SAVING INSIDE AN ARRAY
 			const newImage = new Image({
 				owner: user._id,
@@ -48,11 +40,10 @@ export async function addImage(imageData: ImageType[]) {
 			allImagesData.push(newImage);
 		}
 
-		const res = await Promise.all(allImagesData.map(imageObj => imageObj.save()));
-	
+		const res = await Promise.all(allImagesData.map((imageObj) => imageObj.save()));
 
 		if (res) {
-			return { success: `${allImagesData.length} Images added successfully`};
+			return { success: `${allImagesData.length} Images added successfully` };
 		}
 	} catch (error) {
 		console.error('Error adding image:', error);

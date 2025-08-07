@@ -19,7 +19,7 @@ export default function Home() {
 	const images = useImageStore((state) => state.images);
 	const setImages = useImageStore((state) => state.setImages);
 	const fullScreenImage = useFullScreenImage((state) => state.FullScreenImage);
-	const setNewTags = useTagStore((state) => state.setTag);
+	const setNewTags = useTagStore((state) => state.setTags);
 	const clearAllImages = useImageStore((store) => store.clearAll);
 
 	useEffect(() => {

@@ -5,27 +5,26 @@ import { splitAndCapitalize } from '../utils/functions';
 import { getAllTags } from '../actions/getAllTags';
 
 const NewTagSelector = () => {
-	const setNewTagsByTags = useTagStore((state) => state.setTagByTags);
+	const setNewTagsByTags = useTagStore((state) => state.setAddNewTag);
 	const tags = useTagStore((state) => state.tags);
+	const clearAll = useTagStore((state) => state.clearAll);
 
 	useEffect(() => {
-		const updateImagesData = async () => {
-			if (tags.length === 0) {
-				const allTags = await getAllTags();
-
+		const loadTags = async () => {
+				clearAll();
+				const allTags = await getAllTags();				
 				if (allTags) {
 					setNewTagsByTags(allTags);
 				}
-			}
 		};
-		updateImagesData();
+		loadTags();
 	}, []);
 
 	return (
 		<nav className="tag-selector-desktop">
 			{tags.map((tag, i) => (
 				<Link key={i} href={`/${tag}`}>
-					<span key={i} className="text-black hover:underline cursor-pointer">
+					<span className="text-black hover:underline cursor-pointer">
 						{splitAndCapitalize(tag)}
 					</span>
 				</Link>

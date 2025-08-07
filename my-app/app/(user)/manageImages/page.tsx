@@ -19,9 +19,7 @@ import SearchTagInput from '@/app/components/SearchTagInput';
 export default function ManageImages() {
 	const images = useImageStore((state) => state.images);
 	const setImages = useImageStore((state) => state.setImages);
-	const deleteImageStore = useImageStore((state) => state.deleImage);
-	const setNewTags = useTagStore((state) => state.setTag);
-	const removeTag = useTagStore((state) => state.deleTag);
+	const setNewTags = useTagStore((state) => state.setTags);
 
 	useEffect(() => {
 		const initiateManagePage = async () => {

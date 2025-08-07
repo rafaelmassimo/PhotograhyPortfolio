@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 import { MoonLoader, PacmanLoader } from 'react-spinners';
 import { uploadImageToCloudinaryServerSide } from '../actions/uploadToCloudinary';
 import { useTagStore } from '../stores/tag.store';
+import { toPascalCase } from '../utils/functions';
 
 export type NewImageType = {
 	title: string;
@@ -24,7 +25,7 @@ const AddImageForm = () => {
 	const [compressedImages, setCompressedImages] = useState<File[]>([]);
 	const [miniLoading, setMiniLoading] = useState<boolean>(false);
 	const [uploadedImageStatus, setUploadedImageStatus] = useState<number>(0);
-	const setNewTagsByTags = useTagStore((state) => state.setTagByTags);
+	const setNewTagsByTags = useTagStore((state) => state.setAddNewTag);
 
 	const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const options = {
@@ -125,7 +126,7 @@ const AddImageForm = () => {
 
 			//*RESULT
 			if (res?.success) {
-				setNewTagsByTags(tag);
+				setNewTagsByTags(toPascalCase(tag));
 				toast.success(res.success);
 			} else {
 				toast.error(res?.error ?? 'An error while saving images');
@@ -143,17 +144,17 @@ const AddImageForm = () => {
 	};
 
 	return (
-		<>
-			<form onSubmit={handleSubmit}>
-				<div className="flex flex-col justify-center items-center mb-4 gap-2">
+		<div className='h-[70vh] flex flex-col justify-center items-center '>
+			<form onSubmit={handleSubmit} className='bg-sky-100 p-5 rounded-lg'>
+				<div className="flex flex-col justify-center items-center mb-4 gap-7">
 					{/* IMAGE FILE */}
 					<fieldset className="fieldset">
-						<legend className="text-center fieldset-legend">Select the Images</legend>
+						<legend className="text-center fieldset-legend bg-sky-700 p-1 rounded-lg">Select the Images</legend>
 						<input
 							name="image"
 							accept="image/*"
 							type="file"
-							className="file-input file-input-ghost "
+							className="file-input file-input-ghost mt-2"
 							onChange={(e) => handleImageChange(e)}
 							multiple
 						/>
@@ -178,8 +179,8 @@ const AddImageForm = () => {
 						)}
 
 						{uploadedImageStatus > 0 && !miniLoading && (
-							<div className="flex flex-col items-center justify-center h-20 text-sm text-gray-600 mt-2 overflow-y-auto">
-								<span className="badge badge-neutral">
+							<div className="flex flex-col items-center justify-center h-20 text-sm text-gray-600 mt-2 overflow-y-auto appear">
+								<span className="badge badge-success">
 									{uploadedImageStatus === compressedImages.length
 										? 'Saving Images into the DataBase...'
 										: `Images Uploaded ${uploadedImageStatus}/${compressedImages.length}`}
@@ -190,25 +191,25 @@ const AddImageForm = () => {
 
 					{/* IMAGE TITLE */}
 					<fieldset className="fieldset">
-						<legend className="fieldset-legend">Insert the Title</legend>
+						<legend className="fieldset-legend bg-sky-700 p-1 rounded-lg">Insert the Title</legend>
 						<input type="text" name="title" className="title" placeholder="Type here" required />
 					</fieldset>
 
 					{/* IMAGE TAG */}
 					<fieldset className="fieldset">
-						<legend className="fieldset-legend">Insert the Tag</legend>
+						<legend className="fieldset-legend bg-sky-700 p-1 rounded-lg">Insert the Tag</legend>
 						<input type="text" name="tag" className="tag" placeholder="Type here" required />
 					</fieldset>
 
 					{/* LOCATION */}
 					<fieldset className="fieldset">
-						<legend className="fieldset-legend">Insert the Location</legend>
+						<legend className="fieldset-legend bg-sky-700 p-1 rounded-lg">Insert the Location</legend>
 						<input type="text" name="location" className="tag" placeholder="Type here" />
 					</fieldset>
 
 					{/* CONDITIONAL RENDERING: IF-ELSE CHAIN USING TERNARY OPERATORS */}
 
-					{loading && <PacmanLoader color="#e8da25" />}
+					{loading && <PacmanLoader className='appear' color="#e8da25" />}
 
 					{compressedImages.length > 0 &&
 						!loading &&
@@ -224,7 +225,7 @@ const AddImageForm = () => {
 						))}
 				</div>
 			</form>
-		</>
+		</div>
 	);
 };
 

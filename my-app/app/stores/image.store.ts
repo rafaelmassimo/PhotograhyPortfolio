@@ -11,7 +11,7 @@ interface State {
 // Then, define the actions (functions) that will update or interact with that state
 interface Actions {
 	setImages: (value: ImageType[] | ImageType) => void;
-	deleImage: (id: string) => void;
+	deleteImage: (id: string) => void;
 	clearAll: () => void;
 }
 
@@ -22,7 +22,7 @@ const storeAPI: StateCreator<State & Actions> = (set) => ({
 		set({ images: Array.isArray(value) ? value : [value] }),
 
 	// When I'm creating the state with the images, I'm creating an array of objects so in order to remove it I can do the same logic as I would do in a
-	deleImage: (id: string) =>
+	deleteImage: (id: string) =>
 		set((state) => ({
 			images: state.images.filter((image) => image._id?.toString() !== id),
 		})),

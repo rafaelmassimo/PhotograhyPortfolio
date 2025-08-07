@@ -1,6 +1,7 @@
 import { create, type StateCreator } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { ImageType } from '../models/image.model';
+import { splitAndCapitalize, toPascalCase } from '../utils/functions';
 
 // First, define the shape of your state (the data you want to manage in this store)
 interface State {
@@ -9,16 +10,17 @@ interface State {
 
 // Then, define the actions (functions) that will update or interact with that state
 interface Actions {
-	setTag: (images: ImageType[] | ImageType) => void;
-	setTagByTags: (tags: string | string[]) => void;
-	deleTag: (id: string) => void;
+	setTags: (images: ImageType[] | ImageType) => void;
+	setAddNewTag: (tags: string | string[]) => void;
+	deleteTag: (tagToRemove: string) => void;
 	clearAll: () => void;
+	updateTag: (newTag: string, currentTag: string) => void;
 }
 
 // Here, you define how the store behaves (initial state and the logic of each action)
 const storeAPI: StateCreator<State & Actions> = (set) => ({
 	tags: [],
-	setTag: (images: ImageType[] | ImageType) =>
+	setTags: (images: ImageType[] | ImageType) =>
 		set((state) => {
 			if (Array.isArray(images)) {
 				// Extract unique tags from array of images
@@ -35,7 +37,7 @@ const storeAPI: StateCreator<State & Actions> = (set) => ({
 			}
 		}),
 
-	setTagByTags: (tags: string | string[]) =>
+	setAddNewTag: (tags: string | string[]) =>
 		set((state) => {
 			if (Array.isArray(tags)) {
 				// Use includes method to check each tag
@@ -56,13 +58,24 @@ const storeAPI: StateCreator<State & Actions> = (set) => ({
 			}
 		}),
 
-	deleTag: (tagToRemove: string) =>
+	deleteTag: (tagToRemove: string) =>
 		set((state) => ({
 			// It keeps all tags that are not the tag to remove
 			tags: state.tags.filter((tag) => tag !== tagToRemove),
 		})),
 
 	clearAll: () => set({ tags: [] }),
+
+	updateTag: (newTag: string, currentTag: string) =>
+		set((state) => {
+			const updatedTags = [...state.tags];
+			const indexOldTag = state.tags.indexOf(currentTag);
+			if (indexOldTag !== -1) {
+				updatedTags[indexOldTag] = newTag;
+				return { tags: updatedTags };
+			}
+			return state;
+		}),
 });
 
 // Finally, create the Zustand store and export it for use in your app
