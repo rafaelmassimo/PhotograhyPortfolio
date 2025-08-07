@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Photography Portfolio Setup Guide
 
-## Getting Started
+## Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
+- MongoDB account
+- Cloudinary account
 
-First, run the development server:
+## Installation Steps
 
+### 1. Clone/Download the Project
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone [repository-url]
+cd PhotograhyPortfolio/my-app
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Environment Variables Setup
+Create a `.env.local` file in the `my-app` directory with these variables:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```env
+# MongoDB
+MONGODB_URI=your_mongodb_connection_string
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Cloudinary
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
 
-## Learn More
+# NextJS
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your_nextauth_secret
 
-To learn more about Next.js, take a look at the following resources:
+# Add any other environment variables your project uses
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 3. Database Setup
+- Create a MongoDB Atlas account
+- Create a new cluster
+- Get your connection string
+- Add it to `MONGODB_URI` in `.env.local`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 4. Cloudinary Setup
+- Create a Cloudinary account
+- Go to Dashboard to get your credentials
+- Add them to the `.env.local` file
 
-## Deploy on Vercel
+### 5. Run the Project
+```bash
+npm run dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Visit `http://localhost:3000`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Customization Guide
+
+### Change Project Branding
+1. Update site title in `next.config.js`
+2. Replace logo/favicon in `public` folder
+3. Update metadata in `app/layout.tsx`
+
+### Modify Image Upload Settings
+Edit compression settings in `addImageForm.tsx`:
+```tsx
+const options = {
+    maxSizeMB: 0.8,        // Change max file size
+    maxWidthOrHeight: 2400, // Change max dimensions
+    useWebWorker: true,
+    fileType: 'image/webp',
+};
+```
+
+### Database Schema
+Update the image schema in your models if needed to match your requirements.
