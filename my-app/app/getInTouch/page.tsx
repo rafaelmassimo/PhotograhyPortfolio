@@ -4,7 +4,6 @@ import React from 'react';
 import ContactForm from '../components/ContactForm';
 import Image from 'next/image';
 import '../styles/all.scss'; // Import styles
-import MobileMenuOpener from '../components/MobileMenuOpener';
 import Link from 'next/link';
 import { IoReturnDownBackOutline } from 'react-icons/io5';
 
