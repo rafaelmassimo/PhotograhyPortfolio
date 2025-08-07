@@ -41,9 +41,10 @@ const AddImageForm = () => {
 			const newFilesFormat = Array.from(files);
 			const totalImages = compressedImages!.length + newFilesFormat.length;
 
-			if (totalImages > 10) {
+			if (totalImages > 50) {
 				e.target.value = '';
-				toast.error('You can add up to 10 images at once');
+				toast.error('You can add up to 50 images at once');
+				return;
 			}
 
 			try {
@@ -144,12 +145,14 @@ const AddImageForm = () => {
 	};
 
 	return (
-		<div className='h-[70vh] flex flex-col justify-center items-center '>
-			<form onSubmit={handleSubmit} className='bg-sky-100 p-5 rounded-lg'>
+		<div className="h-[70vh] flex flex-col justify-center items-center ">
+			<form onSubmit={handleSubmit} className="bg-sky-100 p-5 rounded-lg">
 				<div className="flex flex-col justify-center items-center mb-4 gap-7">
 					{/* IMAGE FILE */}
 					<fieldset className="fieldset">
-						<legend className="text-center fieldset-legend bg-sky-700 p-1 rounded-lg">Select the Images</legend>
+						<legend className="text-center fieldset-legend bg-sky-700 p-1 rounded-lg">
+							Select the Images
+						</legend>
 						<input
 							name="image"
 							accept="image/*"
@@ -203,13 +206,15 @@ const AddImageForm = () => {
 
 					{/* LOCATION */}
 					<fieldset className="fieldset">
-						<legend className="fieldset-legend bg-sky-700 p-1 rounded-lg">Insert the Location</legend>
+						<legend className="fieldset-legend bg-sky-700 p-1 rounded-lg">
+							Insert the Location
+						</legend>
 						<input type="text" name="location" className="tag" placeholder="Type here" />
 					</fieldset>
 
 					{/* CONDITIONAL RENDERING: IF-ELSE CHAIN USING TERNARY OPERATORS */}
 
-					{loading && <PacmanLoader className='appear' color="#e8da25" />}
+					{loading && <PacmanLoader className="appear" color="#e8da25" />}
 
 					{compressedImages.length > 0 &&
 						!loading &&
