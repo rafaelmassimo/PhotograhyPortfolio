@@ -53,6 +53,8 @@ const ContactForm = () => {
 						placeholder="Insert Here"
 						name="nameClient"
 						className="input input-neutral bg-white w-full max-w-xs"
+						required
+
 					/>
 
 					<label htmlFor="emailClient">
@@ -63,6 +65,7 @@ const ContactForm = () => {
 						placeholder="Insert Here"
 						name="emailClient"
 						className=" input input-neutral bg-white w-full max-w-xs"
+						required
 					/>
 
 					<label htmlFor="numberClient">
@@ -73,10 +76,12 @@ const ContactForm = () => {
 						placeholder="Insert Here"
 						name="numberClient"
 						className="input input-neutral bg-white w-full max-w-xs"
+						required
 					/>
 
 					<label htmlFor="message">
 						<p className="text-gray-800 text-xl">Your Message</p>
+						required
 					</label>
 
 					<textarea
