@@ -20,16 +20,27 @@ const MobileMenuUpdated = () => {
 				<div className={`dropdown ${menuOpened ? 'dropdownOpened' : ''}`}>
 					<button onClick={() => setMenuOpened(false)}>
 						<span className="text-3xl font-bold ">
-							<RiCloseLargeLine className={`iconStyles mt-2 ${menuOpened ? 'iconOpening' : 'iconClosing'}`} />
+							<RiCloseLargeLine
+								className={`iconStyles mt-2 ${menuOpened ? 'iconOpening' : 'iconClosing'}`}
+							/>
 						</span>
 					</button>
 					{tags.map((tag, i) => (
-						<Link key={i} href={`/${tag}`} className="my-2 p-2" onClick={() => setMenuOpened(false)}>
+						<Link
+							key={i}
+							href={`/${tag}`}
+							className="my-2 p-2"
+							onClick={() => setMenuOpened(false)}
+						>
 							<span className="text-black hover:underline cursor-pointer">
 								{splitAndCapitalize(tag)}
 							</span>
 						</Link>
 					))}
+					<div className="split-line"></div>
+					<Link className="mb-2" href={`/getInTouch`} onClick={() => setMenuOpened(false)}>
+						<span className="text-sky-800 hover:underline cursor-pointer">Contact</span>
+					</Link>
 				</div>
 			</div>
 		</>

@@ -47,8 +47,8 @@ export default function Home() {
 					<MobileMenuOpener />
 				</div>
 			)}
-			<div className="w-full">
-				<div>
+			<div className="w-full min-h-screen flex flex-col">
+				<div className="flex-1">
 					<div className="px-4">
 						<MasonryGrid images={images} />
 					</div>

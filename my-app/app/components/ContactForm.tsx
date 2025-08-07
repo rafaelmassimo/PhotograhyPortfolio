@@ -52,7 +52,7 @@ const ContactForm = () => {
 						type="text"
 						placeholder="Insert Here"
 						name="nameClient"
-						className="input input-accent bg-white w-full max-w-xs"
+						className="input input-neutral bg-white w-full max-w-xs"
 					/>
 
 					<label htmlFor="emailClient">
@@ -62,7 +62,7 @@ const ContactForm = () => {
 						type="text"
 						placeholder="Insert Here"
 						name="emailClient"
-						className=" input input-accent bg-white w-full max-w-xs"
+						className=" input input-neutral bg-white w-full max-w-xs"
 					/>
 
 					<label htmlFor="numberClient">
@@ -72,7 +72,7 @@ const ContactForm = () => {
 						type="text"
 						placeholder="Insert Here"
 						name="numberClient"
-						className="input input-accent bg-white w-full max-w-xs"
+						className="input input-neutral bg-white w-full max-w-xs"
 					/>
 
 					<label htmlFor="message">
@@ -82,7 +82,7 @@ const ContactForm = () => {
 					<textarea
 						id="message"
 						name="message"
-						className="border rounded-lg w-full py-2 px-3 mb-2 h-32 overflow-y-scroll input input-accent bg-white "
+						className="border rounded-lg w-full py-2 px-3 mb-2 h-32 overflow-y-scroll input input-neutral bg-white "
 						placeholder="Type Here Your Message"
 					/>
 				</div>
@@ -90,7 +90,7 @@ const ContactForm = () => {
 				{loading ? (
 					<PuffLoader color="#020103" size={30} speedMultiplier={2} />
 				) : (
-					<button type="submit" className="btn btn-soft bg-white btn-accent">
+					<button type="submit" className="btn btn-soft bg-white btn-accent text-black">
 						Send Message
 					</button>
 				)}

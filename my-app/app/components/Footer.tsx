@@ -10,7 +10,7 @@ const Footer = () => {
 	console.log(session);
 
 	return (
-		<footer className="border-t border-gray-200 mt-16 py-8 relative">
+		<footer className="border-t border-gray-200 mt-16 py-8 relative max-h-fit">
 			<div className="px-4 ml-4">
 				<div className="flex flex-col items-start justify-start space-y-4">
 					{/* Nome/Copyright */}

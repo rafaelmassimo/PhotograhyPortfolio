@@ -20,7 +20,7 @@ const ImagesFiltered = () => {
 		// Decode the URL parameter to get the original tag value
 		const decodedTag = tag ? decodeURIComponent(tag.toString()) : '';
 		console.log(decodedTag);
-		
+
 		clearAllImages();
 
 		const initiateFilteredPage = async () => {
@@ -48,11 +48,15 @@ const ImagesFiltered = () => {
 							<MobileMenuOpener />
 						</div>
 					)}
-					<div className="px-4">
-						<MasonryGrid images={images} />
-					</div>
+					<div className="w-full min-h-screen flex flex-col">
+						<div className="flex-1">
+							<div className="px-4">
+								<MasonryGrid images={images} />
+							</div>
 
-					{fullScreenImage && <FullScreenImageViewer />}
+							{fullScreenImage && <FullScreenImageViewer />}
+						</div>
+					</div>
 				</div>
 			</div>
 		</>

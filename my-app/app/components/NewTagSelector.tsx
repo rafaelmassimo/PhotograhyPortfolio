@@ -29,6 +29,11 @@ const NewTagSelector = () => {
 					</span>
 				</Link>
 			))}
+			<Link href={`/getInTouch`}>
+					<span className="text-sky-800 hover:underline cursor-pointer">
+						Contact
+					</span>
+				</Link>
 		</nav>
 	);
 };
