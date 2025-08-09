@@ -11,12 +11,14 @@ const Header = () => {
 		<header className="w-full">
 			{/* Navigation Bar */}
 			<div className="top-header-style">
-				<Link href={'/'} className="clickable-title">
+				<Link href={'/gallery'} className="clickable-title">
 					Rafael Massimo
 				</Link>
 
+				{/* Just when the user is logged in */}
 				<NavUserLinks />
 				
+				{/* Are the link/Tag on the header */}
 				<NewTagSelector />
 			</div>
 		</header>

@@ -35,9 +35,8 @@ const ContactForm = () => {
 	return (
 		<div>
 			<div className="flex justify-center mb-4 mx-auto">
-				<h1 className="mb-4 text-3xl font-bold text-gray-700 text-white text-5xl text-6xl">
-					{/* Let's{' '} */}
-					<span className="text-transparent bg-clip-text bg-gradient-to-l from-black to-grey-200 ">
+				<h1 className="mb-4 font-bold text-gray-700 text-6xl">
+					<span className="">
 						Lets Talk
 					</span>{' '}
 				</h1>

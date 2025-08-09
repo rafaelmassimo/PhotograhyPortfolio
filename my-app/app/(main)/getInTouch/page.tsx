@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import ContactForm from '../components/ContactForm';
 import Image from 'next/image';
-import '../styles/all.scss'; // Import styles
+import '../../styles/all.scss'; // Import styles
 import Link from 'next/link';
 import { IoReturnDownBackOutline } from 'react-icons/io5';
+import ContactForm from '@/app/components/ContactForm';
 
 const GetInTouchPage = () => {
 	return (

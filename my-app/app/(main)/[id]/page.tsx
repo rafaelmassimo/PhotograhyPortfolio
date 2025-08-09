@@ -1,13 +1,13 @@
 'use client';
 
+import { getImagesByTag } from '@/app/actions/getImagesByTag';
+import FullScreenImageViewer from '@/app/components/FullScreenImageViewer';
+import MasonryGrid from '@/app/components/MansoryGrid';
+import MobileMenuOpener from '@/app/components/MobileMenuOpener';
+import { useFullScreenImage } from '@/app/stores/fullScreenImage.store';
+import { useImageStore } from '@/app/stores/image.store';
 import { useParams } from 'next/navigation';
 import React, { useEffect } from 'react';
-import { useImageStore } from '../stores/image.store';
-import { getImagesByTag } from '../actions/getImagesByTag';
-import FullScreenImageViewer from '../components/FullScreenImageViewer';
-import MasonryGrid from '../components/MansoryGrid';
-import { useFullScreenImage } from '../stores/fullScreenImage.store';
-import MobileMenuOpener from '../components/MobileMenuOpener';
 
 const ImagesFiltered = () => {
 	const { id: tag } = useParams();
@@ -43,6 +43,7 @@ const ImagesFiltered = () => {
 			<div className="w-full">
 				<div>
 					{/* If is true that fullScreenImage is empty than render the following element */}
+					{/** Also here I have the class that makes the mobile menu opener being hided in big screen */}
 					{fullScreenImage.length === 0 && (
 						<div className="display-mobile-menu h-16 flex items-center justify-center relative">
 							<MobileMenuOpener />

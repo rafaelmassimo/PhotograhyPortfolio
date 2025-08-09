@@ -3,19 +3,19 @@
 // Force dynamic rendering to ensure fresh NextAuth session data and prevent caching issues
 export const dynamic = 'force-dynamic';
 
+import { getAllImages } from '@/app/actions/getAllImages';
+import FullScreenImageViewer from '@/app/components/FullScreenImageViewer';
+import MasonryGrid from '@/app/components/MansoryGrid';
+import MobileMenuOpener from '@/app/components/MobileMenuOpener';
+import { useFullScreenImage } from '@/app/stores/fullScreenImage.store';
+import { useImageStore } from '@/app/stores/image.store';
+import { useTagStore } from '@/app/stores/tag.store';
 // If I'm going to import all.scss means that I'm applying all styles coming from all .scss file that I'm adding in All.scss
 // Now I can use directly the classname coming from all.scss that it will work
-import './styles/all.scss';
+import '../../styles/all.scss';
 import { useEffect } from 'react';
-import { useImageStore } from './stores/image.store';
-import { getAllImages } from './actions/getAllImages';
-import MasonryGrid from './components/MansoryGrid';
-import FullScreenImageViewer from './components/FullScreenImageViewer';
-import { useFullScreenImage } from './stores/fullScreenImage.store';
-import { useTagStore } from './stores/tag.store';
-import MobileMenuOpener from './components/MobileMenuOpener';
 
-export default function Home() {
+export default function GalleryPage() {
 	const images = useImageStore((state) => state.images);
 	const setImages = useImageStore((state) => state.setImages);
 	const fullScreenImage = useFullScreenImage((state) => state.FullScreenImage);
@@ -24,7 +24,7 @@ export default function Home() {
 
 	useEffect(() => {
 		clearAllImages();
-		const initiateHomePage = async () => {
+		const initiateGalleryPagePage = async () => {
 			// Getting All Images
 			const data = await getAllImages();
 			if (Array.isArray(data) && data.length > 0) {
@@ -32,7 +32,7 @@ export default function Home() {
 				setNewTags(data);
 			}
 		};
-		initiateHomePage();
+		initiateGalleryPagePage();
 
 		return () => {
 			clearAllImages();
@@ -42,6 +42,7 @@ export default function Home() {
 	return (
 		<>
 			{/* This makes the fuji logo stopping being showing if the full screen image is true */}
+			{/* Also the Mobile Menu Opener being inside the div with the display-... classs makes it invisible within big screen to avoid to have a big empty space */}
 			{fullScreenImage.length === 0 && (
 				<div className="display-mobile-menu h-16 flex items-center justify-center relative">
 					<MobileMenuOpener />

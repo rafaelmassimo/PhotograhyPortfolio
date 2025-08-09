@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image';
 import React from 'react';
 import '@/app/styles/all.scss';
@@ -10,7 +12,7 @@ const MobileMenuOpener = () => {
 	return (
 		<>
 			{!menuOpened && (
-				<button onClick={() => setMenuOpened(!menuOpened)} className="">
+				<button onClick={() => setMenuOpened(!menuOpened)}>
 					<span className="block">
 						<div className="flex flex-row items-center justify-center bob">
 							<Image src={'/logo.png'} alt="fujifilm logo" width={70} height={40} />

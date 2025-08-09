@@ -2,15 +2,12 @@ import type { Metadata } from 'next';
 import { SessionProvider } from './components/AuthProvider';
 import { Poppins } from 'next/font/google';
 import './globals.scss';
-import Footer from './components/Footer';
-import Header from './components/Header';
 import { Toaster } from 'react-hot-toast';
-import MobileMenuUpdated from './components/MobileMenuUpdated';
 
 const poppins = Poppins({
 	subsets: ['latin'],
-	weight: ['300', '400', '500', '600', '700'], // choose weights you need
-	variable: '--font-poppins', // optional, if using CSS variable
+	weight: ['300', '400', '500', '600', '700'],
+	variable: '--font-poppins',
 	display: 'swap',
 });
 
@@ -36,10 +33,7 @@ export default function RootLayout({
 					<div>
 						<Toaster />
 					</div>
-					<MobileMenuUpdated/>
-					<Header />
 					{children}
-					<Footer />
 				</body>
 			</SessionProvider>
 		</html>

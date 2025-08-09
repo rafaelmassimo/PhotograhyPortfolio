@@ -85,7 +85,6 @@
 }
 
 //*Hide mobile menu on desktop screens (larger than 1017px)
-//*Default: mobile menu is visible, but hide it on larger screens
 .display-mobile-menu {
 	margin-bottom: 10px;
 	@media (min-width: 1018px) {
@@ -93,6 +92,7 @@
 	}
 }
 //---------------------------*Menu Opener Animation*----------------------------------//
+
 .dropdown {
 	max-height: 0;
 	width: 100%;

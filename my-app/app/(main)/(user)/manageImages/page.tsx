@@ -5,15 +5,11 @@ export const dynamic = 'force-dynamic';
 // If I'm going to import all.scss means that I'm applying all styles coming from all .scss file that I'm adding in All.scss
 //Now I can use directly the classname coming from all.scss that it will work
 // import './styles/all.scss';
-import { Session } from 'next-auth';
-import { getSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
-import deleteImage from '@/app/actions/deleteImage';
+import { useEffect } from 'react';
 import { getAllImages } from '@/app/actions/getAllImages';
 import MasonryGridDelete from '@/app/components/MansoryGridDelete';
 import { useImageStore } from '@/app/stores/image.store';
 import { useTagStore } from '@/app/stores/tag.store';
-import toast from 'react-hot-toast';
 import SearchTagInput from '@/app/components/SearchTagInput';
 
 export default function ManageImages() {
