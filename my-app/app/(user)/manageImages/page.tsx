@@ -33,14 +33,14 @@ export default function ManageImages() {
 		initiateManagePage();
 	}, []);
 
-	
-
 	return (
-		<div className="w-full">
-				<div className="px-4 ">
-					<SearchTagInput/>
+		<div className="w-full min-h-screen flex flex-col">
+			<div className="flex-1">
+				<div className="px-4">
+					<SearchTagInput />
 					<MasonryGridDelete images={images} />
 				</div>
+			</div>
 		</div>
 	);
 }

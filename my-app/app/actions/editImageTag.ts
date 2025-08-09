@@ -23,23 +23,30 @@ export const editImageTag = async (
 			imageId,
 			{
 				$set: {
-					tag: newTag ? toPascalCase(newTag) : data.tag,
+					tag: toPascalCase(newTag) ?? toPascalCase(data.tag),
 					title: newTitle ?? data.title,
 				},
 			},
 			{ new: true },
 		);
+
+		console.log(data);
+		
 		const writeMessage = () => {
 			const titleToUpdate = data.title === newTitle ? null : newTitle;
-			const tagToUpdate = data.tag === newTag ? null : newTag;
+			const tagToUpdate = toPascalCase(data.tag) === toPascalCase(newTag) ? null : newTag;
+			console.log(`title: ${titleToUpdate} tag: ${tagToUpdate}`);
+			
 			if (tagToUpdate && !titleToUpdate) {
 				return 'Tag Updated Successfully';
 			} else if (!tagToUpdate && titleToUpdate) {
 				return 'Title Updated Successfully';
 			} else if (tagToUpdate && titleToUpdate) {
 				return 'Tag and Title Updated Successfully';
+			} else if (!tagToUpdate && !titleToUpdate) {
+				return 'No changes made';
 			}
-			return 'No changes made';
+			return;
 		};
 
 		if (images) {

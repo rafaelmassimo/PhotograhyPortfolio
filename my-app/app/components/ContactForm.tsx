@@ -81,7 +81,6 @@ const ContactForm = () => {
 
 					<label htmlFor="message">
 						<p className="text-gray-800 text-xl">Your Message</p>
-						required
 					</label>
 
 					<textarea
@@ -89,6 +88,7 @@ const ContactForm = () => {
 						name="message"
 						className="border rounded-lg w-full py-2 px-3 mb-2 h-32 overflow-y-scroll input input-neutral bg-white "
 						placeholder="Type Here Your Message"
+						required
 					/>
 				</div>
 
