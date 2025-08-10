@@ -10,7 +10,7 @@ export const ImageStrip = ({ images, speed }: { images: any[]; speed: number }) 
 		<div className="overflow-hidden w-full">
 			<motion.div
 				className="flex"
-				animate={{ x: ['0%', '-150%'] }}
+				animate={{ x: ['0%', '-200%'] }}
 				transition={{
 					duration: speed,
 					repeat: Infinity,
@@ -24,7 +24,7 @@ export const ImageStrip = ({ images, speed }: { images: any[]; speed: number }) 
 				)}
 
 				{/* Repeat images twice for a seamless loop */}
-				{[...images, ...images].map((image, i) => (
+				{[...images, ...images,...images].map((image, i) => (
 					<div key={i} className="mx-2 w-30 h-20 flex-shrink-0 overflow-hidden rounded-xl">
 						<Image
 							src={image.file}
