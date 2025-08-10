@@ -104,7 +104,7 @@ function HomePage() {
 				<motion.div
 					className="w-fit mx-auto overflow-hidden rounded-2xl"
 					initial={{ scale: 0.6, opacity: 0 }}
-					whileInView={{ scale: 0.9, opacity:1 }}
+					whileInView={{ scale: 0.9, opacity: 1 }}
 					exit={{ scale: 0.6 }}
 					viewport={{
 						once: false,
@@ -153,8 +153,8 @@ function HomePage() {
 								<div key={i} className="perspective-1000 w-fit h-80">
 									<motion.div
 										className="gridSquare rounded-xl relative w-full h-full transition-transform duration-700 hover:rotate-y-180 cursor-pointer"
-										initial={{ opacity: 0, y: 150 }}
-										whileInView={{ opacity: 1, y: 0 }}
+										initial={{ opacity: 0, y: 50, scale: 0.7 }}
+										whileInView={{ opacity: 1, y: 0, scale: 1 }}
 										transition={{ delay: i * 0.3 }}
 										style={{ transformStyle: 'preserve-3d' }}
 										whileHover={{ rotateY: 180, transition: { duration: 0.2 } }}
@@ -208,7 +208,7 @@ function HomePage() {
 						className="w-fit mx-auto overflow-hidden rounded-2xl"
 						initial={{ opacity: 0, y: 100 }}
 						whileInView={{ opacity: 1, y: 0 }}
-						exit={{ opacity: 0 }}
+						exit={{ opacity: 0, scale: 0.5 }}
 						viewport={{ once: false, amount: 0.3 }}
 						transition={{
 							duration: 2,
@@ -236,9 +236,9 @@ function HomePage() {
 				</div>
 			</div>
 
-			{/* Welcome to My World */}
+			{/* Wanna Talk */}
 			<div className="flex flex-col justify-center items-center w-full">
-				<span className="mb-5">Wanna Talk?</span>
+				<span className="mb-5 text-2xl">Wanna Talk?</span>
 				<Link href={'/getInTouch'}>
 					<button className="btn btn-soft btn-accent">Get in Touch</button>
 				</Link>
