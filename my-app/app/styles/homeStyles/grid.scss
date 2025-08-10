@@ -1,0 +1,15 @@
+.gridSquare {
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+	cursor: pointer;
+}
+
+/* 3D Flip Effect Styles */
+.perspective-1000 {
+	perspective: 1000px;
+}
+
+
+.backface-hidden {
+	backface-visibility: hidden;
+}
+

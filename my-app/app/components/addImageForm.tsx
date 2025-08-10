@@ -195,13 +195,13 @@ const AddImageForm = () => {
 					{/* IMAGE TITLE */}
 					<fieldset className="fieldset">
 						<legend className="fieldset-legend bg-sky-700 p-1 rounded-lg">Insert the Title</legend>
-						<input type="text" name="title" className="title" placeholder="Type here" required />
+						<input type="text" name="title" className="title bg-white" placeholder="Type here" required />
 					</fieldset>
 
 					{/* IMAGE TAG */}
 					<fieldset className="fieldset">
 						<legend className="fieldset-legend bg-sky-700 p-1 rounded-lg">Insert the Tag</legend>
-						<input type="text" name="tag" className="tag" placeholder="Type here" required />
+						<input type="text" name="tag" className="tag bg-white" placeholder="Type here" required />
 					</fieldset>
 
 					{/* LOCATION */}
@@ -209,7 +209,7 @@ const AddImageForm = () => {
 						<legend className="fieldset-legend bg-sky-700 p-1 rounded-lg">
 							Insert the Location
 						</legend>
-						<input type="text" name="location" className="tag" placeholder="Type here" />
+						<input type="text" name="location" className="tag bg-white" placeholder="Type here" />
 					</fieldset>
 
 					{/* CONDITIONAL RENDERING: IF-ELSE CHAIN USING TERNARY OPERATORS */}
@@ -218,7 +218,7 @@ const AddImageForm = () => {
 
 					{compressedImages.length > 0 &&
 						!loading &&
-						(miniLoading ? (
+						(miniLoading ? ( 
 							<button className="btn btn-accent w-[132px] h-[40px]" type="submit">
 								<MoonLoader color="#4d26bb" size={20} />
 							</button>

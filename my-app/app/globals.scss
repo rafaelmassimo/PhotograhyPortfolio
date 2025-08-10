@@ -1,13 +1,11 @@
 //Imports from Sass Styles Folder
-
+@use './styles/all';
 
 //Tailwind and Daisy Setup
-@use "tailwindcss";
-@plugin "daisyui";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 [data-nextjs-dev-overlay] {
 	display: none !important;
 }
-
-
-

@@ -1,8 +1,11 @@
 
-@use './_global';
-@use './_images';
-@use './mansory';
-@use './mobileVersion';
-@use './header';
-@use './formStyles';
+@use './mainStyles/global';
+@use './mainStyles/images';
+@use './mainStyles/mansory';
+@use './mainStyles/mobileVersion';
+@use './mainStyles/header';
+@use './mainStyles/formStyles';
+@use './homeStyles/title';
+@use './homeStyles/homeImages';
+@use './homeStyles/grid';
 

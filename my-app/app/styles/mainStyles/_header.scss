@@ -1,0 +1,111 @@
+/* Efeito de sombra interna para H1 */
+.clickable-title {
+	font-size: 2rem;
+	transition: all 0.1s ease;
+	cursor: pointer;
+	border-radius: 4px;
+	padding: 10px;
+	letter-spacing: 10px;
+	margin-left: 3rem;
+
+	&:active {
+		box-shadow: inset 1px 6px 10px 0px rgba(0, 0, 0, 69%);
+		color: rgba(31, 33, 37, 0.9); /* Slightly darker text */
+		transform: translateY(2px); /* Move down 2px */
+	}
+
+    @media (max-width: 1017px) {
+		font-size: 1.3rem;
+        margin-inline: auto;
+        padding-block: 10px;
+	}
+
+    @media (max-width: 500px) {
+		font-size: 1rem;
+        margin-inline: auto;
+        padding-block: 10px;
+	}
+}
+
+//* Header navigation styles
+//* For User Signed in Links
+.header-nav {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 1rem;
+
+	// Medium screens and below
+	@media (max-width: 1017px) {
+		display: flex;
+		flex-direction: row;
+		gap: 0.5rem;
+	}
+
+	.nav-icon-green {
+		font-size: 1.7rem;
+		color: green;
+		box-shadow: 0px 2px 8px 1px;
+		border: 1px;
+		border-radius: 50%;
+		padding: 0px;
+
+		&:active {
+			transform: translateY(2px);
+			box-shadow: none;
+			border: 1px;
+			border-radius: 50%;
+			padding: 1px;
+		}
+	}
+
+	.nav-icon-red {
+		font-size: 1.7rem;
+		color: rgb(128, 17, 0);
+		box-shadow: 0px 2px 8px 1px;
+		border: 1px;
+		border-radius: 50%;
+		padding: 1px;
+
+		&:active {
+			transform: translateY(2px);
+			box-shadow: none;
+			border: 1px;
+			border-radius: 50%;
+			padding: 1px;
+		}
+	}
+}
+
+//This is for the Div which contain the H1 with Rafael Massimo Home button
+//Max width means that up to 1017px you'll have the mobile vision style, over it you'll see the desktop version
+.top-header-style {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	padding: 2rem;
+	gap: 2rem;
+
+	@media (max-width: 1017px) {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 5px;
+	}
+}
+
+.tag-selector-desktop {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: fit-content;
+	// justify-content: ;
+	gap: 1rem;
+	letter-spacing: 2px;
+
+	@media (max-width: 1017px) {
+		display: none;
+	}
+}
