@@ -19,7 +19,7 @@ export const getImagesByTag = async (query: string) => {
 		]);
 
 		if (images && images.length > 0) {
-			const plainImages = [{}]
+			const plainImages = JSON.parse(JSON.stringify(images));
 			return plainImages;
 		} else {
 			throw new Error('No Images with this Tag');
