@@ -9,6 +9,8 @@ import { getOneImageByTag } from '../actions/getOneImageByTag';
 import { splitAndCapitalize, toPascalCase } from '../utils/functions';
 import AnimatedStrips from '../components/AnimatedStrips';
 import Link from 'next/link';
+import { useImageStore } from '../stores/image.store';
+import { getAllImages } from '../actions/getAllImages';
 
 type ImageType = {
 	tag: string;
@@ -16,23 +18,44 @@ type ImageType = {
 };
 
 function HomePage() {
-	const [images, setImages] = useState<ImageType[]>([]);
-
-	// console.log(images,'this is images');
+	const imageStore = useImageStore((state) => state.images);
+	const setImageStore = useImageStore((state) => state.setImages);
+	const [samples, setSamples] = useState<ImageType[]>([]);
+	const [refreshImages, setRefreshImages] = useState<number>(0);
 
 	useEffect(() => {
-		const takeSampleImages = async () => {
-			passions.map(async (passion) => {
-				const res = await getOneImageByTag(passion.title);
-
-				setImages((prevImages) => [
-					...prevImages,
-					{ tag: res.tag as string, file: res.url as string },
-				]);
-			});
+		const fetchAllImages = async () => {
+			const res = await getAllImages();
+			if (res && res.length > 0) {
+				setImageStore(res);
+			}
 		};
-		takeSampleImages();
+
+		fetchAllImages();
 	}, []);
+
+	useEffect(() => {
+		if (imageStore.length > 0) {
+			const takeSampleImages = () => {
+				const sampleImages: ImageType[] = [];
+
+				for (const passion of passions) {
+					// Find the first image that matches this passion's tag
+					const foundImage = imageStore.find((image) => image.tag === toPascalCase(passion.title));
+					if (foundImage && foundImage.file && foundImage.tag) {
+						sampleImages.push({
+							tag: foundImage.tag as string,
+							file: foundImage.file as string,
+						});
+					}
+				}
+				setSamples(sampleImages);
+				
+			};
+
+			takeSampleImages();
+		}
+	}, [imageStore]);
 
 	return (
 		<div className="flex flex-col w-full gap-y-40 px-4 overflow-hidden">
@@ -110,7 +133,7 @@ function HomePage() {
 				</div>
 
 				<div className="grid grid-cols-4 w-full gap-4 mx-auto place-items-center">
-					{images.length > 3 && (
+					{samples.length > 1 && (
 						<>
 							{passions.map((passion, i) => (
 								<div key={i} className="perspective-1000 w-fit h-80">
@@ -139,9 +162,9 @@ function HomePage() {
 												transform: 'rotateY(180deg)',
 											}}
 										>
-											{toPascalCase(passion.title) === (images[i].tag! as string) ? (
+											{toPascalCase(passion.title) === (samples[i]?.tag! as string) ? (
 												<Image
-													src={images[i].file}
+													src={samples[i].file}
 													alt="image"
 													width={1500}
 													height={900}

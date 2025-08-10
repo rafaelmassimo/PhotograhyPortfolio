@@ -3,57 +3,46 @@
 import { useEffect, useState } from 'react';
 import { getAllImageByTagForHome } from '../actions/GetAllImagesByTagForHome';
 import { ImageStrip } from './ImageStrip';
-
-type ImageType = {
-	tag: string;
-	file: string;
-};
+import { useImageStore } from '../stores/image.store';
+import { toPascalCase } from '../utils/functions';
+import passions from '../utils/passionsDescriptions';
+import { ImageType } from '../models/image.model';
 
 export default function AnimatedStrips() {
-	// Store all tags and their images in one state as a dictionary
-	const [imagesByTag, setImagesByTag] = useState<Record<string, ImageType[]>>({});
-
-	// Define tags and their speeds in one place
-	const tagsWithSpeed = [
-		{ tag: 'StreetPhotography', speed: 20 },
-		{ tag: 'Landscape', speed: 30 },
-		{ tag: 'Wild&Tame', speed: 40 },
-		{ tag: 'Portrait', speed: 50 },
-	];
+	const imageStore = useImageStore((state) => state.images);
+	const [imagesToBeRendered, setImagesToBeRendered] = useState<any[]>([]);
 
 	useEffect(() => {
-		const fetchAllImages = async () => {
-			try {
-                const newImagesByTag: Record<string, ImageType[]> = {};
+		if (imageStore.length > 0) {
+			const fetchAllImages = () => {
+				const imagesWithTags: any[] = [];
 
-				// Fetch images for all tags in parallel
-				await Promise.all(
-					tagsWithSpeed.map(async ({ tag }) => {
-						const res = await getAllImageByTagForHome(tag);
-						if (res && res.length > 0) {
-							newImagesByTag[tag] = res.map((img) => ({
-								tag: img.tag as string,
-								file: img.url as string,
-							}));
-						} else {
-							newImagesByTag[tag] = [];
-						}
-					}),
-				);
+				for (const passion of passions) {
+					// Find all images that match this passion's tag
+					const foundImages = imageStore.filter(
+						(image) => image.tag === toPascalCase(passion.title),
+					);
 
-				setImagesByTag(newImagesByTag);
-			} catch (error) {
-				console.error(error);
-			}
-		};
+					if (foundImages.length > 0) {
+						imagesWithTags.push({
+							tag: toPascalCase(passion.title),
+							images: foundImages,
+						});
+					}
+				}
+				setImagesToBeRendered(imagesWithTags);
+			};
 
-		fetchAllImages();
-	}, []);
+			fetchAllImages();
+		}
+	}, [imageStore]);
 
 	return (
 		<div className="flex flex-col gap-4">
-			{tagsWithSpeed.map(({ tag, speed }) => (
-				<ImageStrip key={tag} images={imagesByTag[tag] || []} speed={speed} />
+			{imagesToBeRendered?.map(({ images, tag }, index) => (
+				<div key={`${tag}-${index}`}>
+					<ImageStrip images={images} speed={10 + 5 * index} />
+				</div>
 			))}
 		</div>
 	);

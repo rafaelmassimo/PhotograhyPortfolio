@@ -4,6 +4,8 @@ import Image from 'next/image';
 import LoadingImages from './LoadingImages';
 
 export const ImageStrip = ({ images, speed }: { images: any[]; speed: number }) => {
+	console.log(images[0].file);
+	
 	return (
 		<div className="overflow-hidden w-full">
 			<motion.div
