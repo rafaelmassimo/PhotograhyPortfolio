@@ -7,6 +7,8 @@ import { motion } from 'framer-motion';
 import passions from '../utils/passionsDescriptions';
 import { getOneImageByTag } from '../actions/getOneImageByTag';
 import { splitAndCapitalize, toPascalCase } from '../utils/functions';
+import AnimatedStrips from '../components/AnimatedStrips';
+import Link from 'next/link';
 
 type ImageType = {
 	tag: string;
@@ -22,7 +24,6 @@ function HomePage() {
 		const takeSampleImages = async () => {
 			passions.map(async (passion) => {
 				const res = await getOneImageByTag(passion.title);
-				console.log('res:', res);
 
 				setImages((prevImages) => [
 					...prevImages,
@@ -80,7 +81,12 @@ function HomePage() {
 					className="w-fit mx-auto overflow-hidden rounded-2xl"
 					initial={{ scale: 0.6 }}
 					whileInView={{ scale: 0.9 }}
-					viewport={{ once: false, margin: '30%' }}
+					exit={{ scale: 0.6 }}
+					viewport={{
+						once: false,
+						amount: 0.2,
+						margin: '-100px',
+					}}
 					transition={{
 						duration: 1,
 						ease: 'easeInOut',
@@ -110,9 +116,9 @@ function HomePage() {
 								<div key={i} className="perspective-1000 w-fit h-80">
 									<motion.div
 										className="gridSquare rounded-xl relative w-full h-full transition-transform duration-700 hover:rotate-y-180 cursor-pointer"
-										initial={{ opacity: 0, y: 100 }}
+										initial={{ opacity: 0, y: 150 }}
 										whileInView={{ opacity: 1, y: 0 }}
-										transition={{ delay: i * 0.5 }}
+										transition={{ delay: i * 0.3 }}
 										style={{ transformStyle: 'preserve-3d' }}
 										whileHover={{ rotateY: 180, transition: { duration: 0.2 } }}
 									>
@@ -139,7 +145,9 @@ function HomePage() {
 													alt="image"
 													width={1500}
 													height={900}
-													className={`w-full h-full rounded-xl object-cover ${passion.title === 'Portrait' ? 'object-top' : ''}`}
+													className={`w-full h-full rounded-xl object-cover ${
+														passion.title === 'Portrait' ? 'object-top' : ''
+													}`}
 												/>
 											) : (
 												''
@@ -151,6 +159,54 @@ function HomePage() {
 						</>
 					)}
 				</div>
+			</div>
+
+			{/* Where I AM Located */}
+			<div>
+				<div className="flex flex-col justify-center items-center mb-10">
+					<h2 className="text-5xl">Where is My Location?</h2>
+				</div>
+				<div className="bg-gray-900 py-10 -mx-4 overflow-hidden">
+					<motion.div
+						className="w-fit mx-auto overflow-hidden rounded-2xl"
+						initial={{ opacity: 0, y: 100 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0 }}
+						viewport={{ once: false, amount: 0.3 }}
+						transition={{
+							duration: 2,
+							ease: 'easeInOut',
+						}}
+					>
+						<Image
+							src={'/vancouver.jpg'}
+							alt="camera image"
+							width={1500}
+							height={900}
+							sizes="100vw"
+							className="w-80% object-cover"
+						/>
+					</motion.div>
+				</div>
+			</div>
+			{/* Welcome to My World */}
+			<div className="-mx-4">
+				<div className="flex flex-col justify-center items-center mb-10">
+					<h2 className="text-5xl">Welcome to My World </h2>
+				</div>
+				<div className="cursor-pointer">
+					<Link href={'/gallery'}>
+						<AnimatedStrips />
+					</Link>
+				</div>
+			</div>
+
+			{/* Welcome to My World */}
+			<div className="flex flex-col justify-center items-center w-full">
+				<span className="mb-5">Wanna Talk?</span>
+				<Link href={'/getInTouch'}>
+					<button className="btn btn-soft btn-accent">Get in Touch</button>
+				</Link>
 			</div>
 		</div>
 	);

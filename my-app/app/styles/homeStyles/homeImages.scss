@@ -38,3 +38,15 @@
 		transform: translateX(0px);
 	}
 }
+.locationImage {
+	animation: movement 3s alternate-reverse infinite !important;
+}
+
+@keyframes movement {
+	0% {
+		transform: translateY(0);
+	}
+	100% {
+		transform: translateY(-18px);
+	}
+}
