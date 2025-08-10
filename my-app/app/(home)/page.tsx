@@ -100,11 +100,11 @@ function HomePage() {
 			</div>
 
 			{/* Camera Image */}
-			<div className="bg-gray-700 py-10 -mx-4">
+			<div className="bg-gray-900 py-10 -mx-4">
 				<motion.div
 					className="w-fit mx-auto overflow-hidden rounded-2xl"
-					initial={{ scale: 0.6 }}
-					whileInView={{ scale: 0.9 }}
+					initial={{ scale: 0.6, opacity: 0 }}
+					whileInView={{ scale: 0.9, opacity:1 }}
 					exit={{ scale: 0.6 }}
 					viewport={{
 						once: false,
