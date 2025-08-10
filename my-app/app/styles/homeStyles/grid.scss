@@ -8,8 +8,29 @@
 	perspective: 1000px;
 }
 
-
 .backface-hidden {
 	backface-visibility: hidden;
 }
 
+@keyframes moveLeft {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-50%);
+	}
+}
+
+.rotate-icon {
+	animation: rotateToRightFast 0.2s ease-out forwards !important;
+	
+}
+
+@keyframes rotateToRightFast {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(180deg);
+	}
+}

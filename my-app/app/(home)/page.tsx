@@ -11,6 +11,7 @@ import AnimatedStrips from '../components/AnimatedStrips';
 import Link from 'next/link';
 import { useImageStore } from '../stores/image.store';
 import { getAllImages } from '../actions/getAllImages';
+import { FiRefreshCw } from 'react-icons/fi';
 
 type ImageType = {
 	tag: string;
@@ -22,6 +23,7 @@ function HomePage() {
 	const setImageStore = useImageStore((state) => state.setImages);
 	const [samples, setSamples] = useState<ImageType[]>([]);
 	const [refreshImages, setRefreshImages] = useState<number>(0);
+	const [clicked, setClicked] = useState<boolean>(false);
 
 	useEffect(() => {
 		const fetchAllImages = async () => {
@@ -32,7 +34,7 @@ function HomePage() {
 		};
 
 		fetchAllImages();
-	}, []);
+	}, [refreshImages]);
 
 	useEffect(() => {
 		if (imageStore.length > 0) {
@@ -50,7 +52,6 @@ function HomePage() {
 					}
 				}
 				setSamples(sampleImages);
-				
 			};
 
 			takeSampleImages();
@@ -128,8 +129,21 @@ function HomePage() {
 
 			{/* My Passions */}
 			<div className="mb-20">
-				<div className="flex flex-col justify-center items-center mb-10">
-					<h2 className="text-5xl">My Passions</h2>
+				<div className="flex flex-row justify-center items-center mb-10">
+					<h2 className="text-5xl mr-5">My Passions</h2>
+
+					<div
+						className="flex flex-row active:text-gray-500 cursor-pointer"
+						onClick={() => {
+							setRefreshImages((prev) => prev + 1);
+							setClicked(true);
+							setTimeout(() => setClicked(false), 300);
+						}}
+					>
+						<FiRefreshCw className={`${clicked ? 'rotate-icon' : ''} text-xl  mr-2`} />
+
+						<span className="items-center text-center justify-center">Refresh the shoots</span>
+					</div>
 				</div>
 
 				<div className="grid grid-cols-4 w-full gap-4 mx-auto place-items-center">
@@ -213,14 +227,12 @@ function HomePage() {
 				</div>
 			</div>
 			{/* Welcome to My World */}
-			<div className="-mx-4">
+			<div className="-mx-4 bg-black py-10">
 				<div className="flex flex-col justify-center items-center mb-10">
-					<h2 className="text-5xl">Welcome to My World </h2>
+					<h2 className="text-5xl text-white">Catch Them If You Can, My Shots Are Passing By</h2>
 				</div>
-				<div className="cursor-pointer bg-black">
-					<Link href={'/gallery'}>
-						<AnimatedStrips />
-					</Link>
+				<div className="cursor-pointer ">
+					<AnimatedStrips />
 				</div>
 			</div>
 

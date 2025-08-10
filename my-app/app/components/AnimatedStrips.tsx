@@ -6,7 +6,6 @@ import { ImageStrip } from './ImageStrip';
 import { useImageStore } from '../stores/image.store';
 import { toPascalCase } from '../utils/functions';
 import passions from '../utils/passionsDescriptions';
-import { ImageType } from '../models/image.model';
 
 export default function AnimatedStrips() {
 	const imageStore = useImageStore((state) => state.images);
@@ -20,7 +19,7 @@ export default function AnimatedStrips() {
 				for (const passion of passions) {
 					// Find all images that match this passion's tag
 					const foundImages = imageStore.filter(
-						(image) => image.tag === toPascalCase(passion.title) && image.tag !== 'StreetPhotography',
+						(image) => image.tag === toPascalCase(passion.title),
 					);
 
 					if (foundImages.length > 0) {
@@ -41,7 +40,7 @@ export default function AnimatedStrips() {
 		<div className="flex flex-col gap-4 ">
 			{imagesToBeRendered?.map(({ images, tag }, index) => (
 				<div key={`${tag}-${index}`}>
-					<ImageStrip images={images} speed={30 + 10 * index} />
+					<ImageStrip images={images} index={index} />
 				</div>
 			))}
 		</div>
