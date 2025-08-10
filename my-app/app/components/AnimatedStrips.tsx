@@ -20,7 +20,7 @@ export default function AnimatedStrips() {
 				for (const passion of passions) {
 					// Find all images that match this passion's tag
 					const foundImages = imageStore.filter(
-						(image) => image.tag === toPascalCase(passion.title),
+						(image) => image.tag === toPascalCase(passion.title) && image.tag !== 'StreetPhotography',
 					);
 
 					if (foundImages.length > 0) {
@@ -38,10 +38,10 @@ export default function AnimatedStrips() {
 	}, [imageStore]);
 
 	return (
-		<div className="flex flex-col gap-4">
+		<div className="flex flex-col gap-4 ">
 			{imagesToBeRendered?.map(({ images, tag }, index) => (
 				<div key={`${tag}-${index}`}>
-					<ImageStrip images={images} speed={10 + 5 * index} />
+					<ImageStrip images={images} speed={30 + 10 * index} />
 				</div>
 			))}
 		</div>

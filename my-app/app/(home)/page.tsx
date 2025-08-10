@@ -217,7 +217,7 @@ function HomePage() {
 				<div className="flex flex-col justify-center items-center mb-10">
 					<h2 className="text-5xl">Welcome to My World </h2>
 				</div>
-				<div className="cursor-pointer">
+				<div className="cursor-pointer bg-black">
 					<Link href={'/gallery'}>
 						<AnimatedStrips />
 					</Link>
