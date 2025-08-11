@@ -170,7 +170,7 @@ function HomePage() {
 							{passions.map((passion, i) => (
 								<div key={i} className="perspective-1000 w-fit h-80">
 									<motion.div
-										className="gridSquare rounded-xl relative w-full h-full cursor-pointer transition-transform duration-700 gridOption"
+										className="gridSquare rounded-xl relative w-full h-full backface-hidden cursor-pointer transition-transform duration-700 gridOption"
 										initial={{ opacity: 0, y: 50, scale: 0.7, rotateY: 0 }}
 										whileInView={{ opacity: 1, y: 0, scale: 1 }}
 										animate={{ rotateY: flippedCards[i] ? 180 : 0 }}
