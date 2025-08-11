@@ -28,6 +28,8 @@ function HomePage() {
 	const [flippedCards, setFlippedCards] = useState<{ [key: number]: boolean }>({});
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
+	const anyFlipped = Object.values(flippedCards).some((v) => v);
+
 	useEffect(() => {
 		const fetchAllImages = async () => {
 			const res = await getAllImages();
@@ -66,11 +68,9 @@ function HomePage() {
 	}, [imageStore]);
 
 	const handleCardClick = (index: number) => {
-		console.log(flippedCards[index]);
-
-		setFlippedCards((prev) => ({
-			...prev,
-			[index]: !prev[index],
+		setFlippedCards((previousObject) => ({
+			...previousObject,
+			[index]: !previousObject[index],
 		}));
 	};
 
@@ -158,7 +158,9 @@ function HomePage() {
 					>
 						<FiRefreshCw className={`${clicked ? 'rotate-icon' : ''} lg:text-xl  mr-2`} />
 
-						<span className="items-center text-center justify-center">Refresh the shoots</span>
+						<span className="items-center text-center justify-center">
+							{anyFlipped ? 'Refresh the shoots' : 'Touch Any One'}
+						</span>
 					</div>
 				</div>
 
@@ -172,7 +174,7 @@ function HomePage() {
 										initial={{ opacity: 0, y: 50, scale: 0.7, rotateY: 0 }}
 										whileInView={{ opacity: 1, y: 0, scale: 1 }}
 										animate={{ rotateY: flippedCards[i] ? 180 : 0 }}
-										whileHover={{ rotateY: 180, transition: { duration: 0.2 } }}
+										// whileHover={{ rotateY: 180, transition: { duration: 0.2 } }}
 										transition={{
 											delay: i * 0.3, // delay para outras animações
 											opacity: { duration: 0.7, delay: i * 0.3 },
@@ -203,7 +205,7 @@ function HomePage() {
 											{toPascalCase(passion.title) === (samples[i]?.tag! as string) ? (
 												isLoading ? (
 													<div className="w-full h-full flex items-center justify-center bg-gray-800 rounded-xl">
-														<LoadingImages color='white'/>
+														<LoadingImages color="white" />
 													</div>
 												) : (
 													<Image
@@ -259,7 +261,9 @@ function HomePage() {
 			{/* Slide Images */}
 			<div className="-mx-4 bg-black py-10 slideImagesDiv">
 				<div className="flex flex-col justify-center items-center mb-10">
-					<h2 className="text-5xl text-white slideImagesTitle">Catch Them If You Can, My Shots Are Passing By</h2>
+					<h2 className="text-5xl text-white slideImagesTitle">
+						Catch Them If You Can, My Shots Are Passing By
+					</h2>
 				</div>
 				<div className="cursor-pointer ">
 					<AnimatedStrips />
