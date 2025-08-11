@@ -1,0 +1,84 @@
+.mobilePresentation {
+	@media (max-width: 1024px) {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		gap: 2rem;
+		margin-top: 4rem;
+		margin-bottom: 4rem;
+
+		& h2 {
+			font-size: 2rem;
+		}
+	}
+}
+
+.mobilePassionsHeader {
+	@media (max-width: 1024px) {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		font-size: 2rem;
+		margin-top: 4rem;
+
+		& h2 {
+			font-size: 2rem;
+		}
+
+		.passionRefreshButton {
+			font-size: 1rem;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+	}
+}
+
+.mobileGridPassions {
+	@media (max-width: 1024px) {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		justify-content: center; /* centers the grid horizontally */
+		align-content: center;
+
+		& .passionTitle {
+			font-size: 1.5rem;
+		}
+
+		& .passionDescription {
+			font-size: 0.8rem;
+			margin-top: 1rem;
+		}
+		& .passionContent {
+			display: flex;
+			flex-direction: column;
+			justify-content: start;
+		}
+	}
+}
+
+.locationTitle {
+	@media (max-width: 1024px) {
+		font-size: 2rem;
+		margin-top: 2rem;
+	}
+}
+
+.slideImagesDiv {
+	@media (max-width: 1024px) {
+		margin-block: 4rem;
+	}
+}
+
+.slideImagesTitle {
+	@media (max-width: 1024px) {
+		font-size: 1.8rem;
+		margin-top: 2rem;
+		text-align: center;
+	}
+}

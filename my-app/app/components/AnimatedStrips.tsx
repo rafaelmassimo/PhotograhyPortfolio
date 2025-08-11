@@ -37,7 +37,7 @@ export default function AnimatedStrips() {
 	}, [imageStore]);
 
 	return (
-		<div className="flex flex-col gap-4 ">
+		<div className="flex flex-col lg:gap-4 ">
 			{imagesToBeRendered?.map(({ images, tag }, index) => (
 				<div key={`${tag}-${index}`}>
 					<ImageStrip images={images} index={index} />
