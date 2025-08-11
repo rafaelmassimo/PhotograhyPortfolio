@@ -59,7 +59,7 @@ export const ImageBox = ({
 				onLoad={() => setIsLoading(false)}
 				onContextMenu={handleContextMenu}
 				onDragStart={handleDragStart}
-				className="w-full h-auto select-none"
+				className="w-full h-auto select-none img"
 				draggable={false}
 			/>
 		</div>

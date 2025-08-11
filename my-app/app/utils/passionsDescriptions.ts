@@ -2,7 +2,7 @@ const passions = [
 	{
 		title: 'Street Photography',
 		description:
-			'I love capturing the raw beauty of everyday life, fleeting moments, candid smiles, and the rhythm of the streets that tell stories without words.',
+			'I love capturing the raw beauty of everyday life, fleeting moments and the rhythm of the streets that tell stories without words.',
 	},
 	{
 		title: 'Portrait',
