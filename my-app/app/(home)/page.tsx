@@ -170,7 +170,7 @@ function HomePage() {
 							{passions.map((passion, i) => (
 								<div key={i} className="perspective-1000 w-fit h-80">
 									<motion.div
-										className="gridSquare rounded-xl relative w-full h-full backface-hidden cursor-pointer transition-transform duration-700 gridOption"
+										className="gridSquare rounded-xl relative w-full h-full  cursor-pointer transition-transform duration-700 gridOption"
 										initial={{ opacity: 0, y: 50, scale: 0.7, rotateY: 0 }}
 										whileInView={{ opacity: 1, y: 0, scale: 1 }}
 										animate={{ rotateY: flippedCards[i] ? 180 : 0 }}
@@ -182,11 +182,12 @@ function HomePage() {
 											scale: { duration: 0.7, delay: i * 0.3 },
 											rotateY: { duration: 0.2, delay: 0 }, // delay zero para o flip
 										}}
+										viewport={{ once: true }}
 										style={{ transformStyle: 'preserve-3d' }}
 										onClick={() => handleCardClick(i)}
 									>
 										{/* Front Face */}
-										<div className=" inset-0 w-full h-full flex flex-col p-5 backface-hidden items-center justify-start rounded-xl bg-gray-900 mb-10 passionContent">
+										<div className=" inset-0 w-full h-full flex flex-col p-5 backface-hidden  items-center justify-start rounded-xl bg-gray-900 mb-10 passionContent">
 											<h2 className="text-3xl font-bold text-center text-white passionTitle">
 												{splitAndCapitalize(passion.title)}
 											</h2>
@@ -213,9 +214,10 @@ function HomePage() {
 														alt="image"
 														width={1500}
 														height={900}
-														className={`img w-full h-full rounded-xl object-cover ${
+														className={`img w-full h-full rounded-xl object-cover z-100 ${
 															passion.title === 'Portrait' ? 'object-top' : ''
 														}`}
+														loading="eager"
 													/>
 												)
 											) : (
