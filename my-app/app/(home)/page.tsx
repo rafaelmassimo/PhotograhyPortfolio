@@ -13,6 +13,8 @@ import { getAllImages } from '../actions/getAllImages';
 import { FiRefreshCw } from 'react-icons/fi';
 import LoadingImages from '../components/LoadingImages';
 import ParallaxText from '../components/ScrollVelocity';
+import HamburgerMenuOpener from '../components/HamburgerMenuOpener';
+import { LuArrowBigRight } from 'react-icons/lu';
 
 type ImageType = {
 	tag: string;
@@ -33,10 +35,10 @@ function HomePage() {
 
 	const { scrollYProgress } = useScroll({
 		target: cameraRef,
-		offset: ['start center', 'end start'], // triggers later as you scroll
+		offset: ['start end', 'end start'], // triggers later as you scroll
 	});
 
-	const y = useTransform(scrollYProgress, [0.1, 0.9], ['0%', '-36%']);
+	const y = useTransform(scrollYProgress, [0.1, 0.9], ['0%', '-61%']);
 
 	useEffect(() => {
 		const fetchAllImages = async () => {
@@ -83,15 +85,27 @@ function HomePage() {
 	};
 
 	return (
-		<div className="flex flex-col w-full lg:gap-y-40 px-4 overflow-hidden">
+		<div className="flex flex-col w-full px-4 overflow-hidden">
+			<HamburgerMenuOpener />
 			{/* Title */}
-			<div className="flex flex-col">
+			<div className="flex flex-row justify-between items-center">
 				<h1 className="mainTitle">Rafael Massimo</h1>
+
+				<Link href={'/gallery'} className="iconGallery text-2xl font-semibold mr-6 decoration-clone">
+					<motion.div
+						className="iconGallery flex flex-row justify-center items-center opacity-0"
+						animate={{ opacity: 1 }}
+						transition={{ duration: 1 }}
+					>
+						<span>Gallery</span>
+						<LuArrowBigRight />
+					</motion.div>
+				</Link>
 			</div>
 
 			{/* Who I am */}
 			<div>
-				<div className="lg:grid grid-cols-2 lg:px-20 lg:mb-5 mobilePresentation">
+				<div className="lg:grid grid-cols-2 lg:px-20 lg:mb-5 mobilePresentation mb-20">
 					{/* DIV-1 */}
 					<div className="flex flex-col items-center justify-center imageAnimationFromLeft">
 						<h2 className="text-4xl font-bold mb-4">
@@ -107,10 +121,10 @@ function HomePage() {
 
 					{/* DIV-2 */}
 					<div className="flex">
-						<div className="w-5/6 mx-auto imageAnimationFromRight">
+						<div className="w-5/6 mx-auto imageAnimationFromRight mb-20">
 							<div className="overflow-hidden rounded-2xl">
 								<Image
-									src={'/Photo-3.jpg'}
+									src={'/me.jpg'}
 									alt="camera image"
 									width={1500}
 									height={900}
@@ -124,10 +138,9 @@ function HomePage() {
 			</div>
 
 			{/* Camera Image */}
-			<div ref={cameraRef} className="bg-black py-5 -mx-4 overflow-hidden rounded-md ">
+			<div ref={cameraRef} className="bg-black py-5 -mx-4 overflow-hidden rounded-md">
 				<div
-					className="relative w-[90%]  mx-auto overflow-hidden rounded-2xl cameraImage"
-					style={{ height: '700px' }} // fixed height mask
+					className="relative w-[90%]  mx-auto overflow-hidden rounded-2xl cameraImage maskSize"
 				>
 					<motion.div
 						style={{ y }}
@@ -137,24 +150,28 @@ function HomePage() {
 						transition={{ duration: 1, ease: 'easeInOut' }}
 					>
 						<Image
-							src="/Photo-4.jpg"
+							src="/cameraImage.jpg"
 							alt="camera image"
-							width={2000}
-							height={1500}
-							className="w-full h-auto object-cover"
-							priority
+							width={1000}
+							height={500}
+							className="w-full h-full object-cover"
+							quality={100}
 						/>
 					</motion.div>
 				</div>
 			</div>
+			{/* Parallax Text */}
+			<div className="mb-12">
+				<ParallaxText />
+			</div>
 
 			{/* My Passions */}
 			<div className="mb-20">
-				<div className="flex flex-row justify-center items-center mb-10 mobilePassionsHeader">
-					<h2 className="lg:text-5xl mr-5">My Passions</h2>
+				<div className="flex flex-col justify-center items-center lg:my-20 mobilePassionsHeader">
+					<h2 className="lg:text-5xl text-center">My Passions</h2>
 
 					<div
-						className="flex flex-row active:text-gray-500 cursor-pointer passionRefreshButton"
+						className="flex flex-row active:text-gray-500 cursor-pointer passionRefreshButton mt-1"
 						onClick={() => {
 							setRefreshImages((prev) => prev + 1);
 							setClicked(true);
@@ -164,12 +181,12 @@ function HomePage() {
 						<FiRefreshCw className={`${clicked ? 'rotate-icon' : ''} lg:text-xl  mr-2`} />
 
 						<span className="items-center text-center justify-center">
-							{anyFlipped ? 'Refresh the shoots' : 'Touch Any One'}
+							{anyFlipped ? 'Refresh the shots' : 'Touch Any One'}
 						</span>
 					</div>
 				</div>
 
-				<div className="grid grid-cols-4 w-full gap-4 mx-auto place-items-center mobileGridPassions">
+				<div className="grid grid-cols-4 w-full gap-4 mx-auto place-items-center mobileGridPassions lg:mb-32">
 					{samples.length > 1 && (
 						<>
 							{passions.map((passion, i) => (
@@ -237,17 +254,14 @@ function HomePage() {
 				</div>
 			</div>
 
-			{/* Parallax Text */}
-			<div>
-				<ParallaxText />
-			</div>
+			
 
 			{/* Where I AM Located */}
 			<div>
-				<div className="flex flex-col justify-center items-center mb-10">
+				<div className="flex flex-col justify-center items-center ">
 					<h2 className="text-5xl locationTitle">Where is My Location?</h2>
 				</div>
-				<div className="bg-black py-10 -mx-4 overflow-hidden">
+				<div className="bg-black py-10 -mx-4 overflow-hidden lg:mb-40">
 					<motion.div
 						className="w-fit mx-auto overflow-hidden rounded-2xl"
 						initial={{ opacity: 0, x: 100 }}
@@ -272,7 +286,7 @@ function HomePage() {
 			</div>
 
 			{/* Slide Images */}
-			<div className="-mx-4 bg-black py-10 slideImagesDiv">
+			<div className="-mx-4 bg-black py-10 slideImagesDiv mb-20">
 				<div className="flex flex-col justify-center items-center mb-10">
 					<h2 className="text-5xl text-white slideImagesTitle">
 						Catch Them If You Can, My Shots Are Passing By
@@ -290,6 +304,7 @@ function HomePage() {
 					<button className="btn btn-soft btn-accent">Get in Touch</button>
 				</Link>
 			</div>
+			
 		</div>
 	);
 }

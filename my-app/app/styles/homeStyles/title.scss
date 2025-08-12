@@ -6,12 +6,13 @@
 	padding-top: 3rem;
 
 	@media (max-width: 1024px) {
-		animation: showingTitle 2s ease forwards;
-		font-size: 2rem;
-		text-align: center;
-		opacity: 0;
-		padding-top: 3rem;
-		padding-left: 0;
+		display: none;
+		// animation: showingTitle 2s ease forwards;
+		// font-size: 1.5rem;
+		// text-align: center;
+		// opacity: 0;
+		// padding-top: 3rem;
+		// padding-left: 0;
 	}
 }
 

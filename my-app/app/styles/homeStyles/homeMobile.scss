@@ -46,6 +46,7 @@
 		justify-content: center;
 		align-content: center;
 		gap: 0.5rem; /* adds space between grid items */
+		margin-top: 2rem;
 
 		& .passionTitle {
 			font-size: 1.2rem;
@@ -69,23 +70,59 @@
 }
 
 .locationTitle {
+	margin-bottom: 5rem;
 	@media (max-width: 1024px) {
 		font-size: 2rem;
-		margin-top: 2rem;
+		margin-top: 1rem;
+		margin-bottom: 2rem;
 	}
 }
 
 .slideImagesDiv {
 	@media (max-width: 1024px) {
-		margin-block: 4rem;
+		margin-block: 2rem;
 	}
 }
 
 .slideImagesTitle {
 	@media (max-width: 1024px) {
 		font-size: 1.8rem;
-		margin-top: 2rem;
+		margin-top: 3rem;
 		text-align: center;
 		padding-inline: 0.5rem;
 	}
+}
+
+.maskSize{
+	height: 700px;
+	@media (max-width: 1024px) {
+		height: 210px !important;
+	}
+}
+
+
+.hamburgerIcon {
+	display: block;
+	animation:showHamburger 2.5s forwards;
+
+	@media (min-width: 1000px) {
+		display: none;
+	}
+}
+
+@keyframes showHamburger {
+	0% {
+		opacity: 0;
+		transform: scale(0.6);
+	}
+	100% {
+		opacity: 2;
+		transform: scale(1);
+	}
+}
+.iconGallery {
+	@media (max-width: 1024px) {
+		display: none;
+	}
+
 }
