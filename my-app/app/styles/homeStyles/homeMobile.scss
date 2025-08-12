@@ -108,8 +108,7 @@
 	animation: showHamburger 2.5s forwards 1s;
 	opacity: 0;
 	position: absolute; /* or fixed */
-	top: 0.5rem; /* adjust as needed */
-	// left: 1rem; /* or right: 1rem; */
+	top: 0.4rem; /* adjust as needed */
 	z-index: 1000; /* make sure it's above other content */
 
 	@media (min-width: 1000px) {

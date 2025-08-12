@@ -11,7 +11,7 @@ const HamburgerMenuOpener = () => {
 				<button onClick={() => setMenuOpened(!menuOpened)}>
 					<span className="block">
 						<div className="flex flex-row items-center justify-center">
-							<RxHamburgerMenu className='text-3xl mt-4 hamburgerIcon' />
+							<RxHamburgerMenu className='text-4xl mt-4 hamburgerIcon' />
 						</div>
 					</span>
 				</button>

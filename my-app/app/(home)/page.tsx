@@ -87,7 +87,7 @@ function HomePage() {
 	};
 
 	return (
-		<div className="flex flex-col w-full px-4 overflow-hidden">
+		<div className="flex flex-col w-full px-4 overflow-hidden mt-4">
 			<HamburgerMenuOpener />
 			{/* Title */}
 			<div className="flex flex-row justify-between items-center">
@@ -275,10 +275,10 @@ function HomePage() {
 						}}
 					>
 						<Image
-							src={'/Vancouver.jpg'}
+							src={'https://res.cloudinary.com/dsp2zfdz3/image/upload/v1755033260/photography/Vancouver_xgzvqw.jpg'}
 							alt="camera image"
 							width={1000}
-							height={500}
+							height={1000}
 							className="w-full h-full object-cover"
 							quality={100}
 						/>
