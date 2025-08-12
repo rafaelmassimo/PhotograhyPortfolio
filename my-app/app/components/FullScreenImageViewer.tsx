@@ -1,3 +1,10 @@
+// NOTE FOR MOBILE:
+// On some mobile browsers, the back gesture (like swipe from the edge) may not always trigger the popstate event
+// or may perform a full navigation even if you use pushState. This is a known limitation of mobile browsers.
+// The best practice is to always push a new state when opening the modal and handle popstate as below.
+// However, some mobile browsers may still navigate away from the page when using the back gesture.
+// There is no 100% reliable, cross-browser way to intercept all mobile back gestures for modals.
+// Your code will work on most desktop browsers and many mobile browsers, but not all.
 'use client';
 
 import React, { useEffect } from 'react';
@@ -40,7 +47,8 @@ const FullScreenImageViewer = () => {
 			window.removeEventListener('beforeunload', handleBeforeUnload);
 			window.removeEventListener('popstate', handlePopState);
 			window.removeEventListener('keydown', handleKeyDown);
-			// When closing modal, go forward in history if the state we pushed is present
+			// It “fixes” the browser history so that after closing the modal, 
+			// the user is back to where they were before opening it, and pressing back again won’t reopen the modal.
 			if (window.history.state && window.history.state.fullScreenImage) {
 				window.history.go(1);
 			}
