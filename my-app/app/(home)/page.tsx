@@ -35,10 +35,10 @@ function HomePage() {
 
 	const { scrollYProgress } = useScroll({
 		target: cameraRef,
-		offset: ['start center', 'end center'], // triggers later as you scroll
+		offset: ['start end', 'end start'], // triggers later as you scroll
 	});
 
-	const y = useTransform(scrollYProgress, [0.1, 0.9], ['0%', '-61%']);
+	const y = useTransform(scrollYProgress, [0, 1], ['-10%', '-61%']);
 
 	useEffect(() => {
 		const fetchAllImages = async () => {
