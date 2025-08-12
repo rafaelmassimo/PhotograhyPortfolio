@@ -47,7 +47,7 @@ const FullScreenImageViewer = () => {
 			window.removeEventListener('beforeunload', handleBeforeUnload);
 			window.removeEventListener('popstate', handlePopState);
 			window.removeEventListener('keydown', handleKeyDown);
-			// It “fixes” the browser history so that after closing the modal, 
+			// It “fixes” the browser history so that after closing the modal,
 			// the user is back to where they were before opening it, and pressing back again won’t reopen the modal.
 			if (window.history.state && window.history.state.fullScreenImage) {
 				window.history.go(1);

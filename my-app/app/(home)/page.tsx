@@ -17,6 +17,7 @@ import LoadingImages from '../components/LoadingImages';
 import ParallaxText from '../components/ScrollVelocity';
 import HamburgerMenuOpener from '../components/HamburgerMenuOpener';
 import { LuArrowBigRight } from 'react-icons/lu';
+import { cityName } from '../utils/cityName';
 
 type ImageType = {
 	tag: string;
@@ -34,7 +35,6 @@ function HomePage() {
 	const anyFlipped = Object.values(flippedCards).some((v) => v);
 
 	const cameraRef = useRef(null);
-
 	const { scrollYProgress } = useScroll({
 		target: cameraRef,
 		offset: ['start end', 'end start'], // triggers later as you scroll
@@ -262,26 +262,39 @@ function HomePage() {
 				<div className="flex flex-col justify-center items-center ">
 					<h2 className="text-5xl locationTitle">Where is My Location?</h2>
 				</div>
-				<div className="bg-black py-10 -mx-4 overflow-hidden lg:mb-40">
+				<div className="flex lg:h-[700px] flex-col justify-center items-center bg-black py-10 -mx-4 overflow-hidden lg:mb-40">
 					<motion.div
-						className="w-fit mx-auto overflow-hidden rounded-2xl"
-						initial={{ opacity: 0, x: 100 }}
-						whileInView={{ opacity: 1, x: 0, scale: 0.9 }}
-						exit={{ opacity: 0, scale: 0.5 }}
+						className="w-full overflow-hidden rounded-2xl z-0 relative"
+						initial={{ opacity: 0, x: -100 }}
+						whileInView={{ opacity: 1, x: 0, scale: 1 }}
+						exit={{ opacity: 0 }}
 						viewport={{ once: false, amount: 0.3 }}
 						transition={{
-							duration: 2,
+							duration: 1,
 							ease: 'easeInOut',
 						}}
 					>
 						<Image
-							src={'/vancouver.jpg'}
+							src={'/Vancouver.jpg'}
 							alt="camera image"
-							width={1500}
-							height={900}
-							sizes="100vw"
-							className="w-80% object-cover"
+							width={1000}
+							height={500}
+							className="w-full h-full object-cover"
+							quality={100}
 						/>
+						<motion.div
+							className="absolute flex flex-col justify-center items-center z-1000 top-0 left-0 right-0 bottom-0"
+							initial={{ opacity: 0, x: -100 }}
+							whileInView={{ opacity: 1, x: 0, scale: 1 }}
+							exit={{ opacity: 0 }}
+							viewport={{ once: false, amount: 0.3 }}
+							transition={{
+								duration: 1,
+								ease: 'easeInOut',
+							}}
+						>
+							<h2 className="lg:text-7xl text-4xl font-semibold text-white">{cityName}</h2>
+						</motion.div>
 					</motion.div>
 				</div>
 			</div>
