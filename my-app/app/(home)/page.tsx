@@ -35,7 +35,7 @@ function HomePage() {
 
 	const { scrollYProgress } = useScroll({
 		target: cameraRef,
-		offset: ['start end', 'end start'], // triggers later as you scroll
+		offset: ['start center', 'end start'], // triggers later as you scroll
 	});
 
 	const y = useTransform(scrollYProgress, [0.1, 0.9], ['0%', '-61%']);
