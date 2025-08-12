@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
 import '@/app/styles/all.scss';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import passions from '../utils/passionsDescriptions';
-import { getOneImageByTag } from '../actions/getOneImageByTag';
 import { splitAndCapitalize, toPascalCase } from '../utils/functions';
 import AnimatedStrips from '../components/AnimatedStrips';
 import Link from 'next/link';
@@ -13,6 +12,7 @@ import { useImageStore } from '../stores/image.store';
 import { getAllImages } from '../actions/getAllImages';
 import { FiRefreshCw } from 'react-icons/fi';
 import LoadingImages from '../components/LoadingImages';
+import ParallaxText from '../components/ScrollVelocity';
 
 type ImageType = {
 	tag: string;
@@ -27,8 +27,16 @@ function HomePage() {
 	const [clicked, setClicked] = useState<boolean>(false);
 	const [flippedCards, setFlippedCards] = useState<{ [key: number]: boolean }>({});
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-
 	const anyFlipped = Object.values(flippedCards).some((v) => v);
+
+	const cameraRef = useRef(null);
+
+	const { scrollYProgress } = useScroll({
+		target: cameraRef,
+		offset: ['start center', 'end start'], // triggers later as you scroll
+	});
+
+	const y = useTransform(scrollYProgress, [0.1, 0.9], ['0%', '-36%']);
 
 	useEffect(() => {
 		const fetchAllImages = async () => {
@@ -116,31 +124,28 @@ function HomePage() {
 			</div>
 
 			{/* Camera Image */}
-			<div className="bg-black py-10 -mx-4">
-				<motion.div
-					className="w-fit mx-auto overflow-hidden rounded-2xl"
-					initial={{ scale: 0.6, opacity: 0 }}
-					whileInView={{ scale: 0.9, opacity: 1 }}
-					exit={{ scale: 0.6 }}
-					viewport={{
-						once: false,
-						amount: 0.2,
-						margin: '-100px',
-					}}
-					transition={{
-						duration: 1,
-						ease: 'easeInOut',
-					}}
+			<div ref={cameraRef} className="bg-black py-5 -mx-4 overflow-hidden rounded-md ">
+				<div
+					className="relative w-[90%]  mx-auto overflow-hidden rounded-2xl cameraImage"
+					style={{ height: '700px' }} // fixed height mask
 				>
-					<Image
-						src={'/20250809_171622.jpg'}
-						alt="camera image"
-						width={2000}
-						height={1500}
-						sizes="100vw"
-						className="w-full object-cover"
-					/>
-				</motion.div>
+					<motion.div
+						style={{ y }}
+						initial={{ opacity: 0 }}
+						whileInView={{ opacity: 1 }}
+						viewport={{ once: false }} // fade triggers when almost out of view
+						transition={{ duration: 1, ease: 'easeInOut' }}
+					>
+						<Image
+							src="/Photo-4.jpg"
+							alt="camera image"
+							width={2000}
+							height={1500}
+							className="w-full h-auto object-cover"
+							priority
+						/>
+					</motion.div>
+				</div>
 			</div>
 
 			{/* My Passions */}
@@ -174,7 +179,7 @@ function HomePage() {
 										initial={{ opacity: 0, y: 50, scale: 0.7, rotateY: 0 }}
 										whileInView={{ opacity: 1, y: 0, scale: 1 }}
 										animate={{ rotateY: flippedCards[i] ? 180 : 0 }}
-										// whileHover={{ rotateY: 180, transition: { duration: 0.2 } }}
+										whileHover={{ rotateY: 180, transition: { duration: 0.2 } }}
 										transition={{
 											delay: i * 0.3, // delay para outras animações
 											opacity: { duration: 0.7, delay: i * 0.3 },
@@ -232,6 +237,11 @@ function HomePage() {
 				</div>
 			</div>
 
+			{/* Parallax Text */}
+			<div>
+				<ParallaxText />
+			</div>
+
 			{/* Where I AM Located */}
 			<div>
 				<div className="flex flex-col justify-center items-center mb-10">
@@ -260,6 +270,7 @@ function HomePage() {
 					</motion.div>
 				</div>
 			</div>
+
 			{/* Slide Images */}
 			<div className="-mx-4 bg-black py-10 slideImagesDiv">
 				<div className="flex flex-col justify-center items-center mb-10">

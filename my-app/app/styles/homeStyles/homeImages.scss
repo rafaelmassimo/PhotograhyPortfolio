@@ -36,3 +36,9 @@
 		transform: translateY(-18px);
 	}
 }
+
+.cameraImage {
+	@media (max-width: 1024px) {
+		height: 500px !important;
+	}
+}
