@@ -1,5 +1,4 @@
 import mongoose, { Model, Schema, Types, model } from 'mongoose';
-import { unique } from 'next/dist/build/utils';
 
 export type ImageType = {
 	owner?: Types.ObjectId | string;

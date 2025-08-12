@@ -2,9 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useTagStore } from '../stores/tag.store';
 import { RiCloseLargeLine } from 'react-icons/ri';
-import { splitAndCapitalize } from '../utils/functions';
 import { useMobileMenu } from '../stores/mobileMenu.store';
 import '@/app/styles/all.scss';
 

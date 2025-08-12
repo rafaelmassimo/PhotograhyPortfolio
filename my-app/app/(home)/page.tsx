@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import '@/app/styles/all.scss';
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
@@ -91,7 +93,10 @@ function HomePage() {
 			<div className="flex flex-row justify-between items-center">
 				<h1 className="mainTitle">Rafael Massimo</h1>
 
-				<Link href={'/gallery'} className="iconGallery text-2xl font-semibold mr-6 decoration-clone">
+				<Link
+					href={'/gallery'}
+					className="iconGallery text-2xl font-semibold mr-6 decoration-clone"
+				>
 					<motion.div
 						className="iconGallery flex flex-row justify-center items-center opacity-0"
 						animate={{ opacity: 1 }}
@@ -138,10 +143,8 @@ function HomePage() {
 			</div>
 
 			{/* Camera Image */}
-			<div ref={cameraRef} className="bg-black py-5 -mx-4 overflow-hidden rounded-md">
-				<div
-					className="relative w-[90%]  mx-auto overflow-hidden rounded-2xl cameraImage maskSize"
-				>
+			<div ref={cameraRef} className="bg-black py-5 -mx-4 overflow-hidden rounded-t-md">
+				<div className="relative w-[90%]  mx-auto overflow-hidden rounded-2xl cameraImage maskSize">
 					<motion.div
 						style={{ y }}
 						initial={{ opacity: 0 }}
@@ -254,8 +257,6 @@ function HomePage() {
 				</div>
 			</div>
 
-			
-
 			{/* Where I AM Located */}
 			<div>
 				<div className="flex flex-col justify-center items-center ">
@@ -304,7 +305,6 @@ function HomePage() {
 					<button className="btn btn-soft btn-accent">Get in Touch</button>
 				</Link>
 			</div>
-			
 		</div>
 	);
 }

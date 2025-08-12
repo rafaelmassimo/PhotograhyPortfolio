@@ -1,7 +1,6 @@
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import MobileMenuUpdated from '../components/MobileMenuUpdated';
-import MobileMenuOpener from '../components/MobileMenuOpener';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
 	return (

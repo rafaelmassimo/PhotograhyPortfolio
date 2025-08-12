@@ -1,7 +1,6 @@
 import { create, type StateCreator } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { ImageType } from '../models/image.model';
-import { splitAndCapitalize, toPascalCase } from '../utils/functions';
 
 // First, define the shape of your state (the data you want to manage in this store)
 interface State {

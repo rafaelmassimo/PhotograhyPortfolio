@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getAllImageByTagForHome } from '../actions/GetAllImagesByTagForHome';
 import { ImageStrip } from './ImageStrip';
 import { useImageStore } from '../stores/image.store';
 import { toPascalCase } from '../utils/functions';

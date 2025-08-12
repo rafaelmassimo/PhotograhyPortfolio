@@ -2,7 +2,6 @@
 
 import Image, { ImageType } from './../models/image.model';
 import connectDB from '@/config/database';
-import cloudinary from '@/config/cloudinary';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../api/auth/[...nextauth]/options';
 import User from '../models/user.model';

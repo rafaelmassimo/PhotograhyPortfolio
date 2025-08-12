@@ -1,5 +1,5 @@
 import React from 'react';
-import { PacmanLoader, PuffLoader } from 'react-spinners';
+import { PuffLoader } from 'react-spinners';
 
 interface LoadingImagesProps {
 	color?: string;

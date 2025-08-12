@@ -7,19 +7,22 @@ const FullScreenImageViewer = () => {
 	const fullScreenImage = useFullScreenImage((state) => state.FullScreenImage);
 	const deleteUrl = useFullScreenImage((state) => state.clearAll);
 
-	// Impede scroll de fundo enquanto o modal está aberto
 	useEffect(() => {
+		// Impede scroll de fundo enquanto o modal está aberto
 		document.body.style.overflow = 'hidden';
 
-		// Limpa o estado quando o usuário navega com back/forward do browser
+		// Push a new state to the history stack so back button closes modal
+		window.history.pushState({ fullScreenImage: true }, '');
+
 		const handleBeforeUnload = () => {
 			deleteUrl();
 		};
 
-		const handlePopState = () => {
-			console.log('going back');
-
-			deleteUrl();
+		const handlePopState = (event: PopStateEvent) => {
+			// Only close modal if the state we pushed is present
+			if (window.history.state && window.history.state.fullScreenImage) {
+				deleteUrl();
+			}
 		};
 
 		const handleKeyDown = (event: KeyboardEvent) => {
@@ -28,17 +31,19 @@ const FullScreenImageViewer = () => {
 			}
 		};
 
-		// Adiciona os event listeners
 		window.addEventListener('beforeunload', handleBeforeUnload);
 		window.addEventListener('popstate', handlePopState);
 		window.addEventListener('keydown', handleKeyDown);
 
 		return () => {
 			document.body.style.overflow = 'auto';
-			// Remove os event listeners na limpeza
 			window.removeEventListener('beforeunload', handleBeforeUnload);
 			window.removeEventListener('popstate', handlePopState);
 			window.removeEventListener('keydown', handleKeyDown);
+			// When closing modal, go forward in history if the state we pushed is present
+			if (window.history.state && window.history.state.fullScreenImage) {
+				window.history.go(1);
+			}
 		};
 	}, [deleteUrl]);
 

@@ -11,11 +11,14 @@ import MasonryGridDelete from '@/app/components/MansoryGridDelete';
 import { useImageStore } from '@/app/stores/image.store';
 import { useTagStore } from '@/app/stores/tag.store';
 import SearchTagInput from '@/app/components/SearchTagInput';
+import { useFullScreenImage } from '@/app/stores/fullScreenImage.store';
+import FullScreenImageViewer from '@/app/components/FullScreenImageViewer';
 
 export default function ManageImages() {
 	const images = useImageStore((state) => state.images);
 	const setImages = useImageStore((state) => state.setImages);
 	const setNewTags = useTagStore((state) => state.setTags);
+	const fullScreenImage = useFullScreenImage((state) => state.FullScreenImage);
 
 	useEffect(() => {
 		const initiateManagePage = async () => {
@@ -36,6 +39,7 @@ export default function ManageImages() {
 					<SearchTagInput />
 					<MasonryGridDelete images={images} />
 				</div>
+				{fullScreenImage && <FullScreenImageViewer />}
 			</div>
 		</div>
 	);

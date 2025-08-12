@@ -1,7 +1,5 @@
 import { create, type StateCreator } from 'zustand';
-import { ImageType } from '../models/image.model';
 import { devtools } from 'zustand/middleware';
-import { MdMenuOpen } from 'react-icons/md';
 
 // First, define the shape of your state (the data you want to manage in this store)
 interface State {

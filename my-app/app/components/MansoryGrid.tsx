@@ -3,8 +3,6 @@
 import React from 'react';
 import Masonry from 'react-masonry-css';
 import { ImageType } from '../models/image.model';
-import Image from 'next/image';
-
 import '../styles/all.scss';
 import { ImageBox } from './imageBox';
 import LoadingImages from './LoadingImages';

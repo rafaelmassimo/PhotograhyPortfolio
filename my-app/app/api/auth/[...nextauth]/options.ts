@@ -1,7 +1,6 @@
 import User from '@/app/models/user.model';
 import { UserTypeImported } from '@/app/utils/types';
 import connectDB from '@/config/database';
-import NextAuth from 'next-auth';
 import bcrypt from 'bcrypt';
 import CredentialsProvider from 'next-auth/providers/credentials';
 

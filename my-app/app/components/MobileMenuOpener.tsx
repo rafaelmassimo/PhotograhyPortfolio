@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import React from 'react';
 import '@/app/styles/all.scss';
-import { RiCloseLargeLine } from 'react-icons/ri';
 import { useMobileMenu } from '../stores/mobileMenu.store';
 
 const MobileMenuOpener = () => {

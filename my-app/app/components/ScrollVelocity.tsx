@@ -1,6 +1,5 @@
 
 import '../styles/homeStyles/FilmParallaxCustom.css';
-
 import { useRef } from 'react';
 import {
 	motion,
