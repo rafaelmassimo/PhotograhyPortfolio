@@ -47,7 +47,7 @@ const MasonryGridDelete: React.FC<MasonryGridProps> = ({ images }) => {
 
 				clearTags();
 				// setNewTags(remainedImages);
-				setNewTagsByTags(await getAllTags())
+				setNewTagsByTags(await getAllTags());
 
 				//*User feedback
 				toast.success('Image deleted');
@@ -72,13 +72,13 @@ const MasonryGridDelete: React.FC<MasonryGridProps> = ({ images }) => {
 		try {
 			const res = await editImageTag(imageId!, owner!, newTag!, title!);
 			if (res) {
-				clearTags()
-				setNewTagsByTags(await getAllTags())
+				clearTags();
+				setNewTagsByTags(await getAllTags());
 				toast.success(res.message);
 			}
 		} catch (error) {
-			console.error(error)
-			toast.error('Error during editing tag')
+			console.error(error);
+			toast.error('Error during editing tag');
 		}
 	};
 
@@ -96,21 +96,20 @@ const MasonryGridDelete: React.FC<MasonryGridProps> = ({ images }) => {
 			columnClassName="my-masonry-grid_column"
 		>
 			{images.map((image) => (
-				<div key={image._id?.toString()} className="masonry-item">
-
+				<div key={image._id?.toString()} className="masonry-item overflow-hidden mx-auto">
 					<ImageBox imageFile={image} />
 
 					<div className="mt-2">
-					{/* Here I'm comparing if the ID that has been set from calling handleDeleteImage is the same inside this loop, if yes then show the LoadingImages
-					after that will be set as undefined to will stop to show the loading */}
+						{/* Here I'm comparing if the ID that has been set from calling handleDeleteImage is the same inside this loop, if yes then show the LoadingImages
+after that will be set as undefined to will stop to show the loading */}
 						{imageToDelete === image._id?.toString() ? (
-							<button className="btn btn-error">
+							<button className="btn btn-error w-40">
 								Deleting <MoonLoader color="#4d26bb" size={20} />
 							</button>
 						) : (
 							<button
 								onClick={() => handleDeleteImage(image._id!.toString())}
-								className="btn btn-error"
+								className="btn btn-error w-40"
 							>
 								Delete
 							</button>
@@ -129,12 +128,18 @@ const MasonryGridDelete: React.FC<MasonryGridProps> = ({ images }) => {
 										placeholder={image.title}
 										defaultValue={ModifyTitle}
 										onChange={(e) => setModifyTitle(e.target.value)}
+										className="text-xs placeholder:text-xs placeholder:w-fit placeholder:p-1 placeholder:rounded-lg"
 									/>
 								</div>
 							) : (
-								<div className="flex gap-2">
+								<div className="flex gap-2 my-2">
 									<label htmlFor="title">Title: </label>
-									<input name="title" type="text" placeholder={image.title} />
+									<input
+										name="title"
+										type="text"
+										className="text-xs placeholder:text-xs placeholder:w-fit placeholder:p-1 placeholder:rounded-lg"
+										placeholder={image.title}
+									/>
 								</div>
 							)}
 							{/* Little form Edit Tag */}
@@ -147,16 +152,22 @@ const MasonryGridDelete: React.FC<MasonryGridProps> = ({ images }) => {
 										placeholder={image.tag}
 										defaultValue={ModifyTag}
 										onChange={(e) => setModifyTag(e.target.value)}
+										className="text-xs placeholder:text-xs placeholder:w-fit placeholder:p-1 placeholder:rounded-lg"
 									/>
 								</div>
 							) : (
 								<div className="flex gap-2">
 									<label htmlFor="tag">Tag: </label>
-									<input name="tag" type="text" placeholder={image.tag} />
+									<input
+										name="tag"
+										type="text"
+										placeholder={image.tag}
+										className="text-xs placeholder:text-xs placeholder:w-fit placeholder:p-1 placeholder:rounded-lg"
+									/>
 								</div>
 							)}
 
-							<button className="btn btn-success w-fit" type="submit">
+							<button className="btn btn-success w-40 mt-2" type="submit">
 								Save
 							</button>
 						</form>
