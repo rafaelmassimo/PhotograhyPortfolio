@@ -1,7 +1,6 @@
 'use client';
 
 export const dynamic = 'force-dynamic';
-
 import '@/app/styles/all.scss';
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
