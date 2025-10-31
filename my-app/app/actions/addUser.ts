@@ -5,11 +5,7 @@ import bcrypt from 'bcrypt';
 import User from '../models/user.model';
 
 
-// const newUser = {
-	// 	userName: 'Rafael',
-	// 	email: 'rafael_massimo@hotmail.com'
-	// 	password: 'fujifilm1!'
-	// }
+
 
 export default async function addUser(username: string, email: string, password: string) {
 	const newUser = new User({

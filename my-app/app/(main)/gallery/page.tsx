@@ -42,7 +42,7 @@ export default function GalleryPage() {
 	return (
 		<>
 			{/* This makes the fuji logo stopping being showing if the full screen image is true */}
-			{/* Also the Mobile Menu Opener being inside the div with the display-... classs makes it invisible within big screen to avoid to have a big empty space */}
+			{/* Also the Mobile Menu Opener being inside the div with the display-... class makes it invisible within big screen to avoid to have a big empty space */}
 			{fullScreenImage.length === 0 && (
 				<div className="display-mobile-menu h-16 flex items-center justify-center relative">
 					<MobileMenuOpener />
