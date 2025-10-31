@@ -275,7 +275,7 @@ function HomePage() {
 						}}
 					>
 						<Image
-							src={'https://res.cloudinary.com/dsp2zfdz3/image/upload/v1755033260/photography/Vancouver_xgzvqw.jpg'}
+							src={'/vancouver.jpg'}
 							alt="camera image"
 							width={1000}
 							height={1000}
